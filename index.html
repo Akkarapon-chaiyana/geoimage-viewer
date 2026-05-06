@@ -256,7 +256,7 @@
       <div class="lt-hdr">Coordinate Reference</div>
       <div class="lt-body">
         <div class="ctrl-row"><span class="ctrl-lbl">Interval</span>
-          <select id="lt-ref-int"><option value="0.1">0.1°</option><option value="0.25">0.25°</option><option value="0.5">0.5°</option><option value="1">1°</option><option value="2">2°</option><option value="5">5°</option><option value="10" selected>10°</option><option value="15">15°</option><option value="30">30°</option></select>
+          <select id="lt-ref-int"><option value="0.1">0.1°</option><option value="0.25">0.25°</option><option value="0.5">0.5°</option><option value="1" selected>1°</option><option value="2">2°</option><option value="5">5°</option><option value="10">10°</option><option value="15">15°</option><option value="30">30°</option></select>
         </div>
         <div class="ctrl-row"><span class="ctrl-lbl">Label size</span>
           <input type="range" id="lt-frame-fontsize" min="7" max="16" value="16"/>
@@ -280,9 +280,27 @@
             <option value="cross">Cross (+)</option>
           </select>
         </div>
+        <div class="ctrl-row"><span class="ctrl-lbl">Lng rotate</span>
+          <select id="lt-lng-rot">
+            <option value="0" selected>0°</option>
+            <option value="45">45°</option>
+            <option value="-45">−45°</option>
+            <option value="90">90°</option>
+            <option value="-90">−90°</option>
+          </select>
+        </div>
+        <div class="ctrl-row"><span class="ctrl-lbl">Lat rotate</span>
+          <select id="lt-lat-rot">
+            <option value="0" selected>0°</option>
+            <option value="45">45°</option>
+            <option value="-45">−45°</option>
+            <option value="90">90°</option>
+            <option value="-90">−90°</option>
+          </select>
+        </div>
         <div style="border-top:1px solid #21262d;margin:5px 0 4px;"></div>
         <div class="ctrl-row">
-          <button id="ref-fit-btn" style="width:100%;padding:4px 8px;background:#1f6feb;border:none;color:#fff;border-radius:4px;font-size:10px;cursor:pointer;">Fit &amp; Lock Current Frame</button>
+          <button id="ref-fit-btn" style="width:100%;padding:4px 8px;background:transparent;border:1px solid #1f6feb;color:#1f6feb;border-radius:4px;font-size:10px;cursor:pointer;">Fit &amp; Lock Current Frame</button>
         </div>
       </div>
     </div>
@@ -329,7 +347,8 @@
         <div style="border-top:1px solid #21262d;margin:5px 0 4px;"></div>
         <div class="ctrl-row"><span class="ctrl-lbl">Box color</span>
           <input type="color" id="lt-scale-bg-color" value="#ffffff"/>
-          <span class="ctrl-lbl" style="width:28px;text-align:right">α</span>
+        </div>
+        <div class="ctrl-row"><span class="ctrl-lbl">Opacity</span>
           <input type="range" id="lt-scale-bg-op" min="0" max="1" step=".05" value="1"/>
           <span class="pct" id="lt-scale-bg-op-v">100%</span>
         </div>
@@ -342,7 +361,8 @@
       <div class="lt-body">
         <div class="ctrl-row"><span class="ctrl-lbl">Box color</span>
           <input type="color" id="lt-legend-bg-color" value="#ffffff"/>
-          <span class="ctrl-lbl" style="width:28px;text-align:right">α</span>
+        </div>
+        <div class="ctrl-row"><span class="ctrl-lbl">Opacity</span>
           <input type="range" id="lt-legend-bg-op" min="0" max="1" step=".05" value="1"/>
           <span class="pct" id="lt-legend-bg-op-v">100%</span>
         </div>
@@ -356,6 +376,12 @@
           <label style="font-size:10px;color:#c9d1d9;display:flex;align-items:center;gap:3px;"><input type="checkbox" id="lt-legend-italic" style="accent-color:#58a6ff;"> Italic</label>
         </div>
         <div class="ctrl-row"><span class="ctrl-lbl">Bar height</span><input type="range" id="lt-legend-bar-h" min="4" max="24" value="5"/><span class="pct" id="lt-legend-bar-h-v">5px</span></div>
+        <div class="ctrl-row"><span class="ctrl-lbl">Orient</span>
+          <select id="lt-legend-orient">
+            <option value="landscape" selected>Landscape</option>
+            <option value="portrait">Portrait</option>
+          </select>
+        </div>
       </div>
     </div>
 
@@ -504,6 +530,7 @@ function fmtNum(n){
 }
 function fmtSize(b){if(!b)return '';if(b>=1e9)return(b/1e9).toFixed(1)+' GB';if(b>=1e6)return(b/1e6).toFixed(1)+' MB';if(b>=1e3)return(b/1e3).toFixed(0)+' KB';return b+' B';}
 function cbGrad(name){const fn=CMAPS[name]||CMAPS.viridis;const s=[];for(let i=0;i<=10;i++)s.push(`${fn(i/10)} ${i*10}%`);return `linear-gradient(to right,${s.join(',')})`;}
+function cbGradV(name){const fn=CMAPS[name]||CMAPS.viridis;const s=[];for(let i=0;i<=10;i++)s.push(`${fn(i/10)} ${i*10}%`);return `linear-gradient(to top,${s.join(',')})`;}
 function escHtml(s){return String(s??'').replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));}
 function isNoColor(v){return !v||v==='none'||v==='transparent'||/rgba\([^)]*,\s*0(?:\.0+)?\s*\)$/i.test(String(v));}
 function colorToRgba(color,opacity=1){
@@ -686,8 +713,8 @@ function renderRasterCard(lo){
   q('.rem-btn').addEventListener('click',()=>{if(map.hasLayer(lo.leafletLayer))map.removeLayer(lo.leafletLayer);layers=layers.filter(l=>l.id!==lo.id);card.remove();updateStatus();refreshLegend();if(!layers.length)showEmpty();});
   q('.op-sl').addEventListener('input',e=>{lo.opacity=parseFloat(e.target.value);q('.op-pct').textContent=Math.round(lo.opacity*100)+'%';lo.leafletLayer?.setOpacity(lo.opacity);});
   q('.rst-btn')?.addEventListener('click',()=>{lo.stretchMin=lo.dataMin;lo.stretchMax=lo.dataMax;q('.smin').value=fmtNum(lo.stretchMin);q('.smax').value=fmtNum(lo.stretchMax);applyRender(lo);});
-  q('.smin')?.addEventListener('change',e=>{const v=parseFloat(e.target.value);if(!isNaN(v)){lo.stretchMin=v;applyRender(lo);}});
-  q('.smax')?.addEventListener('change',e=>{const v=parseFloat(e.target.value);if(!isNaN(v)){lo.stretchMax=v;applyRender(lo);}});
+  q('.smin')?.addEventListener('change',e=>{const v=parseFloat(e.target.value);if(!isNaN(v)){lo.stretchMin=v;applyRender(lo);refreshLegend();}});
+  q('.smax')?.addEventListener('change',e=>{const v=parseFloat(e.target.value);if(!isNaN(v)){lo.stretchMax=v;applyRender(lo);refreshLegend();}});
   q('.cmap-sel')?.addEventListener('change',e=>{lo.colormap=e.target.value;q('.cbar-el').style.background=cbGrad(lo.colormap);applyRender(lo);refreshLegend();});
   q('.mode-sel').addEventListener('change',e=>{lo.renderMode=e.target.value;if(lo.renderMode==='unique'&&lo.band==='rgb')lo.band='0';if(lo.renderMode==='unique')ensureUniqueValues(lo);renderRasterCard(lo);applyRender(lo);refreshLegend();});
   card.querySelectorAll('.uvc').forEach(inp=>inp.addEventListener('input',e=>{lo.uniqueColors[String(e.target.dataset.v)]=colorControlValue(e.target);applyRender(lo);refreshLegend();}));
@@ -921,9 +948,9 @@ document.querySelectorAll('.tab-btn').forEach(b=>b.addEventListener('click',()=>
 applyDataOverlayPositions();
 
 // ── Coordinate Frame (Floating Scope) ─────────────────────────
-let frameEnabled=false,frameInterval=10,frameColor='#000000',frameFontSize=16;
+let frameEnabled=false,frameInterval=1,frameColor='#000000',frameFontSize=16,frameLngRotation=0,frameLatRotation=0;
 let frameLatLng=null; // {n,s,e,w} decimal degrees — the scope rectangle
-let gratEnabled=false,gratLayer=null,gratLabels=[],gratInterval=10,gratColor='#000000',gratOpacity=.35,gratStyle='dashed';
+let gratEnabled=false,gratLayer=null,gratLabels=[],gratInterval=1,gratColor='#000000',gratOpacity=.35,gratStyle='dashed';
 
 function initFrameLatLng(){
   const b=map.getBounds();
@@ -983,10 +1010,12 @@ function drawFrameScope(){
     if(px<r.x+4||px>r.x2-4)continue;
     const txt=fmtLng(lng);
     g.appendChild(addSVGEl(NS,'line',{x1:px,y1:r.y,x2:px,y2:r.y-5,stroke:frameColor,'stroke-width':1}));
-    const tT=addSVGEl(NS,'text',{x:px,y:r.y-7,'text-anchor':'middle',fill:frameColor,'font-size':fs,'font-family':fam});
+    const tyT=r.y-7;
+    const tT=addSVGEl(NS,'text',{x:px,y:tyT,'text-anchor':'middle',fill:frameColor,'font-size':fs,'font-family':fam,'font-weight':'bold',transform:frameLngRotation?`rotate(${frameLngRotation},${px},${tyT})`:''});
     tT.textContent=txt; g.appendChild(tT);
     g.appendChild(addSVGEl(NS,'line',{x1:px,y1:r.y2,x2:px,y2:r.y2+5,stroke:frameColor,'stroke-width':1}));
-    const tB=addSVGEl(NS,'text',{x:px,y:r.y2+fs+5,'text-anchor':'middle',fill:frameColor,'font-size':fs,'font-family':fam});
+    const tyB=r.y2+fs+5;
+    const tB=addSVGEl(NS,'text',{x:px,y:tyB,'text-anchor':'middle',fill:frameColor,'font-size':fs,'font-family':fam,'font-weight':'bold',transform:frameLngRotation?`rotate(${frameLngRotation},${px},${tyB})`:''});
     tB.textContent=txt; g.appendChild(tB);
   }
 
@@ -995,11 +1024,19 @@ function drawFrameScope(){
     const py=map.latLngToContainerPoint([lat,frameLatLng.w]).y;
     if(py<r.y+4||py>r.y2-4)continue;
     const txt=fmtLat(lat);
+    // When rotated, anchor at tick y (py) with text-anchor middle so rotation centers on the tick.
+    // When unrotated, use baseline offset and end/start anchors for natural horizontal alignment.
+    const latRot=frameLatRotation;
+    const tyL=latRot?py:py+fs*0.35;
+    const xL=latRot?r.x-fs*0.6-5:r.x-7;
+    const xR=latRot?r.x2+fs*0.6+5:r.x2+7;
+    const ancL=latRot?'middle':'end';
+    const ancR=latRot?'middle':'start';
     g.appendChild(addSVGEl(NS,'line',{x1:r.x,y1:py,x2:r.x-5,y2:py,stroke:frameColor,'stroke-width':1}));
-    const tL=addSVGEl(NS,'text',{x:r.x-7,y:py+fs*0.35,'text-anchor':'end',fill:frameColor,'font-size':fs,'font-family':fam});
+    const tL=addSVGEl(NS,'text',{x:xL,y:tyL,'text-anchor':ancL,'dominant-baseline':latRot?'middle':'auto',fill:frameColor,'font-size':fs,'font-family':fam,'font-weight':'bold',transform:latRot?`rotate(${latRot},${xL},${py})`:''});
     tL.textContent=txt; g.appendChild(tL);
     g.appendChild(addSVGEl(NS,'line',{x1:r.x2,y1:py,x2:r.x2+5,y2:py,stroke:frameColor,'stroke-width':1}));
-    const tR=addSVGEl(NS,'text',{x:r.x2+7,y:py+fs*0.35,'text-anchor':'start',fill:frameColor,'font-size':fs,'font-family':fam});
+    const tR=addSVGEl(NS,'text',{x:xR,y:tyL,'text-anchor':ancR,'dominant-baseline':latRot?'middle':'auto',fill:frameColor,'font-size':fs,'font-family':fam,'font-weight':'bold',transform:latRot?`rotate(${latRot},${xR},${py})`:''});
     tR.textContent=txt; g.appendChild(tR);
   }
 
@@ -1071,6 +1108,8 @@ document.getElementById('lt-frame-on').addEventListener('change',e=>{
 document.getElementById('lt-frame-fontsize').addEventListener('input',e=>{frameFontSize=parseInt(e.target.value);document.getElementById('lt-frame-fs-v').textContent=e.target.value+'px';if(frameEnabled)drawFrameScope();});
 document.getElementById('lt-ref-int').addEventListener('change',e=>{frameInterval=parseFloat(e.target.value);gratInterval=parseFloat(e.target.value);if(frameEnabled)drawFrameScope();if(gratEnabled)buildGrat();});
 document.getElementById('lt-frame-color').addEventListener('input',e=>{frameColor=colorControlValue(e.target);if(frameEnabled)drawFrameScope();});
+document.getElementById('lt-lng-rot').addEventListener('change',e=>{frameLngRotation=parseFloat(e.target.value);if(frameEnabled)drawFrameScope();});
+document.getElementById('lt-lat-rot').addEventListener('change',e=>{frameLatRotation=parseFloat(e.target.value);if(frameEnabled)drawFrameScope();});
 
 // ── Grid lines ─────────────────────────────────────────────────
 function buildGrat(){
@@ -1185,11 +1224,11 @@ function updateScaleBar(){
   el.style.display='block';
   el.style.background=colorToRgba(scaleBgColor,scaleBgOp);
   el.style.border=`1px solid ${scaleBorderColor}`;
-  const{px,label}=niceScaleDist(160*metersPerPx(),scaleUnit);
+  const{px,label}=niceScaleDist(320*metersPerPx(),scaleUnit);
   const segW=Math.max(4,Math.floor(px/scaleSegs));
   let segs='';
   for(let i=0;i<scaleSegs;i++){
-    const fill=i%2===0?scaleColor:'transparent';
+    const fill=scaleSegs>1?(i%2===0?'#000000':'#ffffff'):scaleColor;
     segs+=`<div style="width:${segW}px;height:${scaleBarH}px;background:${fill};box-sizing:border-box;border:1.5px solid ${scaleBorderColor};${i>0?'border-left:none':''}"></div>`;
   }
   document.getElementById('scale-bar-inner').innerHTML=
@@ -1210,7 +1249,7 @@ document.getElementById('lt-scale-bg-op').addEventListener('input',e=>{scaleBgOp
 
 // Legend
 const legendEl=document.getElementById('lt-legend-el');
-let legendBgColor='#ffffff',legendBgOp=1,legendBorderColor='#000000',legendFontSz=14,legendBarH=5,legendBold=false,legendItalic=false;
+let legendBgColor='#ffffff',legendBgOp=1,legendBorderColor='#000000',legendFontSz=14,legendBarH=5,legendBold=false,legendItalic=false,legendOrientation='landscape';
 function applyLegendStyle(){
   legendEl.style.background=colorToRgba(legendBgColor,legendBgOp);
   legendEl.style.borderColor=legendBorderColor;
@@ -1232,6 +1271,12 @@ function refreshLegend(){
             <div style="width:13px;height:8px;background:${lo.uniqueColors[String(v)]||'#000'};border:1px solid #000;border-radius:2px;flex-shrink:0"></div>
             <div style="font-size:${metaSz}px;color:#111">${escHtml(fmtNum(v))}</div></div>`;
         });
+      }else if(legendOrientation==='portrait'){
+        const barW=Math.max(legendBarH*2,12);
+        html+=`<div style="display:flex;align-items:center;gap:5px">
+          <div style="width:${barW}px;height:80px;border-radius:2px;background:${cbGradV(lo.colormap)};border:1px solid #000;flex-shrink:0"></div>
+          <div style="display:flex;flex-direction:column;justify-content:space-between;height:80px;font-size:${metaSz}px;color:#555">
+            <span>${fmtNum(lo.stretchMax)}</span><span>${fmtNum(lo.stretchMin)}</span></div></div>`;
       }else{
         html+=`<div style="height:${legendBarH}px;border-radius:2px;background:${cbGrad(lo.colormap)};border:1px solid #000"></div>
           <div style="display:flex;justify-content:space-between;font-size:${metaSz}px;color:#555;margin-top:1px"><span>${fmtNum(lo.stretchMin)}</span><span>${fmtNum(lo.stretchMax)}</span></div>`;
@@ -1258,6 +1303,7 @@ document.getElementById('lt-legend-font').addEventListener('input',e=>{legendFon
 document.getElementById('lt-legend-bold').addEventListener('change',e=>{legendBold=e.target.checked;refreshLegend();});
 document.getElementById('lt-legend-italic').addEventListener('change',e=>{legendItalic=e.target.checked;refreshLegend();});
 document.getElementById('lt-legend-bar-h').addEventListener('input',e=>{legendBarH=parseInt(e.target.value);document.getElementById('lt-legend-bar-h-v').textContent=legendBarH+'px';refreshLegend();});
+document.getElementById('lt-legend-orient').addEventListener('change',e=>{legendOrientation=e.target.value;refreshLegend();});
 legendEl.style.display='block';
 refreshLegend();
 
@@ -1341,11 +1387,11 @@ enhanceNoColorInputs(document);
 function getLayoutState(){
   const g=id=>document.getElementById(id);
   return{
-    frame:{visible:g('lt-frame-on').checked,interval:parseFloat(g('lt-ref-int').value),color:colorControlValue(g('lt-frame-color'))},
+    frame:{visible:g('lt-frame-on').checked,interval:parseFloat(g('lt-ref-int').value),color:colorControlValue(g('lt-frame-color')),lngRotation:parseFloat(g('lt-lng-rot').value),latRotation:parseFloat(g('lt-lat-rot').value)},
     grid:{visible:g('lt-grid-on').checked,interval:parseFloat(g('lt-ref-int').value),style:g('lt-grid-style').value,color:colorControlValue(g('lt-grid-color')),opacity:parseFloat(g('lt-grid-op').value)},
     northArrow:{visible:g('lt-north-on').checked,style:g('lt-north-style').value,size:parseInt(g('lt-north-size').value),fill:colorControlValue(g('lt-north-fill')),label:colorControlValue(g('lt-north-label'))},
     scaleBar:{visible:g('lt-scale-on').checked,unit:g('lt-scale-unit').value,segments:parseInt(g('lt-scale-segs').value),height:parseInt(g('lt-scale-h').value),color:colorControlValue(g('lt-scale-color')),borderColor:colorControlValue(g('lt-scale-border-color')),fontSize:parseInt(g('lt-scale-font').value),fontColor:colorControlValue(g('lt-scale-font-color')),bgColor:colorControlValue(g('lt-scale-bg-color')),bgOpacity:parseFloat(g('lt-scale-bg-op').value)},
-    legend:{visible:g('lt-legend-on').checked,bgColor:colorControlValue(g('lt-legend-bg-color')),bgOpacity:parseFloat(g('lt-legend-bg-op').value),borderColor:colorControlValue(g('lt-legend-border-color')),fontSize:parseInt(g('lt-legend-font').value),bold:g('lt-legend-bold').checked,italic:g('lt-legend-italic').checked,barHeight:parseInt(g('lt-legend-bar-h').value)},
+    legend:{visible:g('lt-legend-on').checked,bgColor:colorControlValue(g('lt-legend-bg-color')),bgOpacity:parseFloat(g('lt-legend-bg-op').value),borderColor:colorControlValue(g('lt-legend-border-color')),fontSize:parseInt(g('lt-legend-font').value),bold:g('lt-legend-bold').checked,italic:g('lt-legend-italic').checked,barHeight:parseInt(g('lt-legend-bar-h').value),orientation:g('lt-legend-orient').value},
   };
 }
 
@@ -1374,7 +1420,7 @@ async function loadProject(file){
   // Layout
   const l=proj.layout||{};const g=id=>document.getElementById(id);
   function restoreCheck(id,val){const el=g(id);if(el&&val!==undefined){el.checked=val;el.dispatchEvent(new Event('change'));}}
-  if(l.frame){if(l.frame.interval){g('lt-ref-int').value=l.frame.interval;frameInterval=l.frame.interval;}if(l.frame.color){setColorControlValue(g('lt-frame-color'),l.frame.color);frameColor=l.frame.color;}restoreCheck('lt-frame-on',l.frame.visible);if(frameEnabled)drawFrameScope();}
+  if(l.frame){if(l.frame.interval){g('lt-ref-int').value=l.frame.interval;frameInterval=l.frame.interval;}if(l.frame.color){setColorControlValue(g('lt-frame-color'),l.frame.color);frameColor=l.frame.color;}if(l.frame.lngRotation!==undefined){g('lt-lng-rot').value=l.frame.lngRotation;frameLngRotation=l.frame.lngRotation;}if(l.frame.latRotation!==undefined){g('lt-lat-rot').value=l.frame.latRotation;frameLatRotation=l.frame.latRotation;}restoreCheck('lt-frame-on',l.frame.visible);if(frameEnabled)drawFrameScope();}
   if(l.grid){if(l.grid.interval){g('lt-ref-int').value=l.grid.interval;gratInterval=l.grid.interval;}if(l.grid.style){g('lt-grid-style').value=l.grid.style;gratStyle=l.grid.style;}if(l.grid.color){setColorControlValue(g('lt-grid-color'),l.grid.color);gratColor=l.grid.color;}if(l.grid.opacity!==undefined){g('lt-grid-op').value=l.grid.opacity;gratOpacity=l.grid.opacity;}restoreCheck('lt-grid-on',l.grid.visible);if(gratEnabled)buildGrat();}
   if(l.northArrow){
     if(l.northArrow.style){g('lt-north-style').value=l.northArrow.style;northStyle=l.northArrow.style;}
@@ -1401,6 +1447,7 @@ async function loadProject(file){
     if(l.legend.borderColor){setColorControlValue(g('lt-legend-border-color'),l.legend.borderColor);legendBorderColor=l.legend.borderColor;}
     if(l.legend.fontSize){g('lt-legend-font').value=l.legend.fontSize;legendFontSz=l.legend.fontSize;g('lt-legend-font-v').textContent=legendFontSz+'px';}
     if(l.legend.barHeight){g('lt-legend-bar-h').value=l.legend.barHeight;legendBarH=l.legend.barHeight;g('lt-legend-bar-h-v').textContent=legendBarH+'px';}
+    if(l.legend.orientation){g('lt-legend-orient').value=l.legend.orientation;legendOrientation=l.legend.orientation;}
     if(l.legend.bold!==undefined){g('lt-legend-bold').checked=l.legend.bold;legendBold=l.legend.bold;}
     if(l.legend.italic!==undefined){g('lt-legend-italic').checked=l.legend.italic;legendItalic=l.legend.italic;}
     restoreCheck('lt-legend-on',l.legend.visible);applyLegendStyle();refreshLegend();
@@ -1438,13 +1485,30 @@ function fitAndSyncLayer(andLock){
     if(gratEnabled)buildGrat();
   }catch(e){}
 }
-document.getElementById('ref-fit-btn').addEventListener('click',()=>{
-  if(!frameEnabled){
-    const frameToggle=document.getElementById('lt-frame-on');
-    frameToggle.checked=true;frameToggle.dispatchEvent(new Event('change'));
+function updateLockBtn(){
+  const btn=document.getElementById('ref-fit-btn');
+  if(extentLocked){
+    btn.style.cssText='width:100%;padding:4px 8px;background:#1f6feb;border:1px solid #1f6feb;color:#fff;border-radius:4px;font-size:10px;cursor:pointer;';
+  }else{
+    btn.style.cssText='width:100%;padding:4px 8px;background:transparent;border:1px solid #1f6feb;color:#1f6feb;border-radius:4px;font-size:10px;cursor:pointer;';
   }
-  fitAndSyncLayer(true);
-  if(frameEnabled)setTimeout(drawFrameScope,250);
+}
+document.getElementById('ref-fit-btn').addEventListener('click',()=>{
+  if(extentLocked){
+    extentLocked=false;
+    map.setMaxBounds(null);
+    if(frameEnabled)drawFrameScope();
+    if(gratEnabled)buildGrat();
+    updateLockBtn();
+  }else{
+    if(!frameEnabled){
+      const frameToggle=document.getElementById('lt-frame-on');
+      frameToggle.checked=true;frameToggle.dispatchEvent(new Event('change'));
+    }
+    fitAndSyncLayer(true);
+    updateLockBtn();
+    if(frameEnabled)setTimeout(drawFrameScope,250);
+  }
 });
 
 
