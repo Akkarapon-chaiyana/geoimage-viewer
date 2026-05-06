@@ -7,117 +7,117 @@
   <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css"/>
   <style>
     *{box-sizing:border-box;margin:0;padding:0;}
-    body{display:flex;height:100vh;font-family:'Segoe UI',system-ui,sans-serif;background:#f3f3f3;color:#24292f;overflow:hidden;}
+    body{display:flex;height:100vh;font-family:'Segoe UI',system-ui,sans-serif;background:#ede6dc;color:#3d2f1e;overflow:hidden;}
 
     /* ── Sidebar ── */
-    #sidebar{width:280px;min-width:280px;height:100vh;display:flex;flex-direction:column;background:#ffffff;border-right:1px solid #d0d7de;overflow:hidden;}
-    #app-header{padding:8px 12px;background:#f6f8fa;border-bottom:1px solid #d0d7de;flex-shrink:0;}
+    #sidebar{width:280px;min-width:280px;height:100vh;display:flex;flex-direction:column;background:#faf7f2;border-right:1px solid #d4c4b0;overflow:hidden;}
+    #app-header{padding:8px 12px;background:#f0ebe3;border-bottom:1px solid #d4c4b0;flex-shrink:0;}
     #app-header .row1{display:flex;align-items:center;gap:8px;}
     #app-header .logo{font-size:18px;}
-    #app-header .title{font-size:14px;font-weight:600;color:#0969da;}
-    #app-header .contact{font-size:9px;color:#818b97;margin-top:2px;padding-left:2px;}
-    #app-header .contact a{color:#818b97;text-decoration:none;}
-    #app-header .contact a:hover{color:#0969da;}
+    #app-header .title{font-size:14px;font-weight:600;color:#c17f3a;}
+    #app-header .contact{font-size:9px;color:#9a8070;margin-top:2px;padding-left:2px;}
+    #app-header .contact a{color:#9a8070;text-decoration:none;}
+    #app-header .contact a:hover{color:#c17f3a;}
 
     /* Tabs */
-    #tab-bar{display:flex;border-bottom:1px solid #d0d7de;flex-shrink:0;}
-    .tab-btn{flex:1;padding:6px;border:none;background:#f6f8fa;color:#656d76;font-size:11px;cursor:pointer;border-bottom:2px solid transparent;transition:all .15s;}
-    .tab-btn.active{color:#0969da;border-bottom-color:#0969da;background:#ffffff;}
-    .tab-btn:hover:not(.active){color:#24292f;}
+    #tab-bar{display:flex;border-bottom:1px solid #d4c4b0;flex-shrink:0;}
+    .tab-btn{flex:1;padding:6px;border:none;background:#f0ebe3;color:#7a6550;font-size:11px;cursor:pointer;border-bottom:2px solid transparent;transition:all .15s;}
+    .tab-btn.active{color:#c17f3a;border-bottom-color:#c17f3a;background:#faf7f2;}
+    .tab-btn:hover:not(.active){color:#3d2f1e;}
     .tab-panel{flex:1 1 auto;min-height:0;display:flex;flex-direction:column;overflow:hidden;}
 
     /* Accordion */
-    .accordion-hdr{display:flex;align-items:center;justify-content:space-between;padding:6px 10px;font-size:10px;color:#656d76;cursor:pointer;background:#f6f8fa;border-bottom:1px solid #d0d7de;flex-shrink:0;}
-    .accordion-hdr:hover{color:#24292f;}
+    .accordion-hdr{display:flex;align-items:center;justify-content:space-between;padding:6px 10px;font-size:10px;color:#7a6550;cursor:pointer;background:#f0ebe3;border-bottom:1px solid #d4c4b0;flex-shrink:0;}
+    .accordion-hdr:hover{color:#3d2f1e;}
     .accordion-hdr .arr{transition:transform .2s;}
     .accordion-hdr.open .arr{transform:rotate(90deg);}
-    .accordion-body{background:#ffffff;border-bottom:1px solid #d0d7de;flex-shrink:0;}
+    .accordion-body{background:#faf7f2;border-bottom:1px solid #d4c4b0;flex-shrink:0;}
 
     /* Drop zone */
-    #dropzone{margin:7px;border:2px dashed #d0d7de;border-radius:7px;padding:10px;text-align:center;cursor:pointer;transition:all .2s;position:relative;background:#f6f8fa;}
-    #dropzone:hover,#dropzone.dragover{border-color:#0969da;background:rgba(9,105,218,.04);}
+    #dropzone{margin:7px;border:2px dashed #d4c4b0;border-radius:7px;padding:10px;text-align:center;cursor:pointer;transition:all .2s;position:relative;background:#f0ebe3;}
+    #dropzone:hover,#dropzone.dragover{border-color:#c17f3a;background:rgba(193,127,58,.05);}
     #dropzone .dz-icon{font-size:16px;}
-    #dropzone p{font-size:10px;color:#656d76;}
-    #dropzone .dz-hint{font-size:9px;color:#818b97;}
-    #dropzone .dz-btn{display:inline-block;margin-top:4px;padding:2px 8px;background:#eaeef2;border:1px solid #d0d7de;color:#24292f;border-radius:5px;font-size:10px;}
+    #dropzone p{font-size:10px;color:#7a6550;}
+    #dropzone .dz-hint{font-size:9px;color:#9a8070;}
+    #dropzone .dz-btn{display:inline-block;margin-top:4px;padding:2px 8px;background:#ede6dc;border:1px solid #d4c4b0;color:#3d2f1e;border-radius:5px;font-size:10px;}
     #file-input{position:absolute;inset:0;opacity:0;cursor:pointer;width:100%;}
 
     /* URL */
     #url-row{display:flex;gap:4px;padding:0 7px 7px;}
-    #url-input{flex:1;background:#ffffff;border:1px solid #d0d7de;color:#24292f;padding:4px 6px;border-radius:5px;font-size:10px;outline:none;min-width:0;}
-    #url-input::placeholder{color:#b6bec8;}
-    #url-input:focus{border-color:#0969da;box-shadow:0 0 0 2px rgba(9,105,218,.1);}
-    #url-btn{padding:4px 7px;background:#0969da;border:none;color:#fff;border-radius:5px;font-size:10px;cursor:pointer;white-space:nowrap;}
-    #url-btn:hover{background:#218bff;}
+    #url-input{flex:1;background:#faf7f2;border:1px solid #d4c4b0;color:#3d2f1e;padding:4px 6px;border-radius:5px;font-size:10px;outline:none;min-width:0;}
+    #url-input::placeholder{color:#b8a898;}
+    #url-input:focus{border-color:#c17f3a;box-shadow:0 0 0 2px rgba(193,127,58,.15);}
+    #url-btn{padding:4px 7px;background:#c17f3a;border:none;color:#fff;border-radius:5px;font-size:10px;cursor:pointer;white-space:nowrap;}
+    #url-btn:hover{background:#a86828;}
 
     /* Basemap */
-    #bm-bar{padding:5px 7px;display:flex;gap:3px;border-bottom:1px solid #d0d7de;flex-shrink:0;}
-    .bm-btn{flex:1;padding:4px 2px;border:1px solid #d0d7de;background:#ffffff;color:#656d76;border-radius:4px;cursor:pointer;font-size:9px;transition:all .15s;}
-    .bm-btn.active{background:#0969da;border-color:#0969da;color:#fff;}
-    .bm-btn:hover:not(.active){border-color:#0969da;color:#24292f;}
+    #bm-bar{padding:5px 7px;display:flex;gap:3px;border-bottom:1px solid #d4c4b0;flex-shrink:0;}
+    .bm-btn{flex:1;padding:4px 2px;border:1px solid #d4c4b0;background:#faf7f2;color:#7a6550;border-radius:4px;cursor:pointer;font-size:9px;transition:all .15s;}
+    .bm-btn.active{background:#c17f3a;border-color:#c17f3a;color:#fff;}
+    .bm-btn:hover:not(.active){border-color:#c17f3a;color:#3d2f1e;}
 
     /* Layer list */
-    #layers-hdr{padding:5px 10px;font-size:9px;text-transform:uppercase;letter-spacing:1px;color:#818b97;border-bottom:1px solid #d0d7de;display:flex;justify-content:space-between;align-items:center;flex-shrink:0;}
-    #layer-count{background:#eaeef2;border:1px solid #d0d7de;padding:0 6px;border-radius:20px;font-size:9px;color:#24292f;}
+    #layers-hdr{padding:5px 10px;font-size:9px;text-transform:uppercase;letter-spacing:1px;color:#9a8070;border-bottom:1px solid #d4c4b0;display:flex;justify-content:space-between;align-items:center;flex-shrink:0;}
+    #layer-count{background:#ede6dc;border:1px solid #d4c4b0;padding:0 6px;border-radius:20px;font-size:9px;color:#3d2f1e;}
     #layer-list{flex:1 1 auto;min-height:0;overflow-y:auto;padding:5px;}
     #layer-list::-webkit-scrollbar{width:3px;}
-    #layer-list::-webkit-scrollbar-thumb{background:#d0d7de;}
-    .empty-state{text-align:center;color:#8c959f;padding:20px 10px;font-size:11px;line-height:1.8;}
+    #layer-list::-webkit-scrollbar-thumb{background:#d4c4b0;}
+    .empty-state{text-align:center;color:#9a8070;padding:20px 10px;font-size:11px;line-height:1.8;}
     .empty-state .es-icon{font-size:24px;margin-bottom:4px;}
 
     /* Layer card */
-    .layer-item{background:#ffffff;border:1px solid #d0d7de;border-radius:6px;margin-bottom:4px;overflow:hidden;}
-    .layer-item:hover{border-color:#b6bec8;}
+    .layer-item{background:#faf7f2;border:1px solid #d4c4b0;border-radius:6px;margin-bottom:4px;overflow:hidden;}
+    .layer-item:hover{border-color:#b8a070;}
     .layer-hdr{padding:6px 7px 6px 9px;display:flex;align-items:center;gap:5px;}
     .layer-swatch{width:8px;height:8px;border-radius:50%;flex-shrink:0;}
-    .layer-name{flex:1;font-size:10px;font-weight:500;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;color:#24292f;}
+    .layer-name{flex:1;font-size:10px;font-weight:500;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;color:#3d2f1e;}
     .badge{font-size:8px;padding:1px 4px;border-radius:3px;flex-shrink:0;}
-    .b-bands{background:#eaeef2;color:#656d76;border:1px solid #d0d7de;}
-    .b-cog{background:#dafbe1;color:#1a7f37;border:1px solid #aef0c0;}
-    .b-url{background:#ddf4ff;color:#0969da;border:1px solid #79c0ff;}
-    .b-file{background:#fff8f0;color:#bc4c00;border:1px solid #ffa657;}
-    .b-shp{background:#fbefff;color:#7c3aed;border:1px solid #d8b4fe;}
+    .b-bands{background:#ede6dc;color:#7a6550;border:1px solid #d4c4b0;}
+    .b-cog{background:#e8f5e9;color:#2e7d32;border:1px solid #a5d6a7;}
+    .b-url{background:#e8f0fe;color:#1a56db;border:1px solid #93b4f8;}
+    .b-file{background:#fff3e0;color:#e65100;border:1px solid #ffb74d;}
+    .b-shp{background:#f3e5f5;color:#6a1b9a;border:1px solid #ce93d8;}
     .layer-acts{display:flex;gap:2px;}
-    .lb{width:20px;height:20px;border:none;background:#eaeef2;color:#656d76;border-radius:4px;cursor:pointer;font-size:10px;display:flex;align-items:center;justify-content:center;transition:all .15s;}
-    .lb:hover{background:#d0d7de;color:#24292f;}
-    .lb.danger:hover{background:#cf222e;color:#fff;}
-    .layer-body{padding:6px 8px;border-top:1px solid #eaeef2;}
+    .lb{width:20px;height:20px;border:none;background:#ede6dc;color:#7a6550;border-radius:4px;cursor:pointer;font-size:10px;display:flex;align-items:center;justify-content:center;transition:all .15s;}
+    .lb:hover{background:#d4c4b0;color:#3d2f1e;}
+    .lb.danger:hover{background:#b91c1c;color:#fff;}
+    .layer-body{padding:6px 8px;border-top:1px solid #ede6dc;}
     .stats-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:3px;margin-bottom:5px;}
     .stats-grid.c2{grid-template-columns:repeat(2,1fr);}
-    .stat-box{background:#f6f8fa;border:1px solid #eaeef2;padding:2px 4px;border-radius:3px;}
-    .stat-lbl{font-size:8px;color:#818b97;text-transform:uppercase;}
-    .stat-val{font-size:9px;font-weight:600;color:#24292f;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;}
-    .colorbar{height:5px;border-radius:2px;margin-bottom:5px;border:1px solid #d0d7de;}
+    .stat-box{background:#f0ebe3;border:1px solid #e8ddd0;padding:2px 4px;border-radius:3px;}
+    .stat-lbl{font-size:8px;color:#9a8070;text-transform:uppercase;}
+    .stat-val{font-size:9px;font-weight:600;color:#3d2f1e;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;}
+    .colorbar{height:5px;border-radius:2px;margin-bottom:5px;border:1px solid #d4c4b0;}
     .ctrl-row{display:flex;align-items:center;gap:4px;margin-bottom:4px;}
-    .ctrl-lbl{font-size:9px;color:#818b97;width:46px;flex-shrink:0;}
-    .ctrl-row select,.ctrl-row input[type="number"],.ctrl-row input[type="text"]{flex:1;background:#ffffff;border:1px solid #d0d7de;color:#24292f;padding:2px 4px;border-radius:4px;font-size:10px;outline:none;}
-    .ctrl-row select:focus,.ctrl-row input:focus{border-color:#0969da;box-shadow:0 0 0 2px rgba(9,105,218,.1);}
-    .ctrl-row input[type="color"]{width:44px;height:20px;padding:1px;border:1px solid #d0d7de;border-radius:4px;background:#ffffff;cursor:pointer;}
+    .ctrl-lbl{font-size:9px;color:#9a8070;width:46px;flex-shrink:0;}
+    .ctrl-row select,.ctrl-row input[type="number"],.ctrl-row input[type="text"]{flex:1;background:#faf7f2;border:1px solid #d4c4b0;color:#3d2f1e;padding:2px 4px;border-radius:4px;font-size:10px;outline:none;}
+    .ctrl-row select:focus,.ctrl-row input:focus{border-color:#c17f3a;box-shadow:0 0 0 2px rgba(193,127,58,.15);}
+    .ctrl-row input[type="color"]{width:44px;height:20px;padding:1px;border:1px solid #d4c4b0;border-radius:4px;background:#faf7f2;cursor:pointer;}
     .srow{display:grid;grid-template-columns:14px 1fr 14px 1fr;gap:3px;align-items:center;margin-bottom:4px;}
-    .srow label{font-size:9px;color:#818b97;text-align:center;}
-    .srow input{background:#ffffff;border:1px solid #d0d7de;color:#24292f;padding:2px 3px;border-radius:4px;font-size:10px;width:100%;outline:none;}
-    input[type="range"]{flex:1;height:3px;appearance:none;background:#d0d7de;border-radius:2px;outline:none;}
-    input[type="range"]::-webkit-slider-thumb{appearance:none;width:11px;height:11px;border-radius:50%;background:#0969da;cursor:pointer;border:2px solid #ffffff;}
-    .pct{font-size:9px;color:#656d76;width:24px;text-align:right;flex-shrink:0;}
-    .act-btn{width:100%;padding:3px;background:#f6f8fa;border:1px solid #d0d7de;color:#656d76;border-radius:4px;cursor:pointer;font-size:9px;margin-bottom:3px;transition:all .15s;}
-    .act-btn:hover{background:#eaeef2;color:#24292f;}
+    .srow label{font-size:9px;color:#9a8070;text-align:center;}
+    .srow input{background:#faf7f2;border:1px solid #d4c4b0;color:#3d2f1e;padding:2px 3px;border-radius:4px;font-size:10px;width:100%;outline:none;}
+    input[type="range"]{flex:1;height:3px;appearance:none;background:#d4c4b0;border-radius:2px;outline:none;}
+    input[type="range"]::-webkit-slider-thumb{appearance:none;width:11px;height:11px;border-radius:50%;background:#c17f3a;cursor:pointer;border:2px solid #faf7f2;}
+    .pct{font-size:9px;color:#7a6550;width:24px;text-align:right;flex-shrink:0;}
+    .act-btn{width:100%;padding:3px;background:#f0ebe3;border:1px solid #d4c4b0;color:#7a6550;border-radius:4px;cursor:pointer;font-size:9px;margin-bottom:3px;transition:all .15s;}
+    .act-btn:hover{background:#ede6dc;color:#3d2f1e;}
 
     /* Layout tab */
     #tab-data{min-height:0;}
     #tab-layout{flex:1 1 auto;display:block;overflow-y:auto;padding:5px 5px 28px;min-height:0;max-height:100%;}
     #tab-layout::-webkit-scrollbar{width:3px;}
-    #tab-layout::-webkit-scrollbar-thumb{background:#d0d7de;}
-    .lt-grp{background:#ffffff;border:1px solid #d0d7de;border-radius:6px;margin-bottom:5px;overflow:hidden;}
-    .lt-hdr{padding:6px 9px;display:flex;align-items:center;justify-content:space-between;font-size:10px;font-weight:500;color:#24292f;}
+    #tab-layout::-webkit-scrollbar-thumb{background:#d4c4b0;}
+    .lt-grp{background:#faf7f2;border:1px solid #d4c4b0;border-radius:6px;margin-bottom:5px;overflow:hidden;}
+    .lt-hdr{padding:6px 9px;display:flex;align-items:center;justify-content:space-between;font-size:10px;font-weight:500;color:#3d2f1e;}
     .lt-hdr label{display:flex;align-items:center;gap:6px;cursor:pointer;}
-    .lt-hdr input[type=checkbox]{accent-color:#0969da;}
-    .lt-body{padding:6px 9px 8px;border-top:1px solid #eaeef2;}
+    .lt-hdr input[type=checkbox]{accent-color:#c17f3a;}
+    .lt-body{padding:6px 9px 8px;border-top:1px solid #e8ddd0;}
     .lt-body .ctrl-row{margin-bottom:4px;}
     .save-row{display:flex;gap:4px;margin-top:2px;}
-    .save-btn{flex:1;padding:5px;background:#eaeef2;border:1px solid #d0d7de;color:#24292f;border-radius:5px;cursor:pointer;font-size:10px;transition:all .15s;}
-    .save-btn:hover{background:#d0d7de;}
-    .save-btn.primary{background:#0969da;border-color:#0969da;color:#fff;}
-    .save-btn.primary:hover{background:#218bff;}
+    .save-btn{flex:1;padding:5px;background:#ede6dc;border:1px solid #d4c4b0;color:#3d2f1e;border-radius:5px;cursor:pointer;font-size:10px;transition:all .15s;}
+    .save-btn:hover{background:#d4c4b0;}
+    .save-btn.primary{background:#c17f3a;border-color:#c17f3a;color:#fff;}
+    .save-btn.primary:hover{background:#a86828;}
 
     /* Map area */
     #map-wrap{flex:1;position:relative;display:flex;flex-direction:column;overflow:hidden;}
@@ -132,55 +132,55 @@
     }
     .frame-inner-tick{position:absolute;pointer-events:none;z-index:999;}
     /* Scope frame handles */
-    .fscope-handle{position:absolute;width:12px;height:12px;background:#58a6ff;border:1.5px solid rgba(255,255,255,.85);border-radius:2px;pointer-events:all;opacity:.8;transform:translate(-50%,-50%);z-index:1015;}
-    .fscope-handle:hover{opacity:1;background:#388bfd;}
-    .fscope-move{width:18px;height:18px;border-radius:4px;background:rgba(88,166,255,.25);border:1.5px solid #58a6ff;}
+    .fscope-handle{position:absolute;width:12px;height:12px;background:#c17f3a;border:1.5px solid rgba(255,255,255,.85);border-radius:2px;pointer-events:all;opacity:.8;transform:translate(-50%,-50%);z-index:1015;}
+    .fscope-handle:hover{opacity:1;background:#a86828;}
+    .fscope-move{width:18px;height:18px;border-radius:4px;background:rgba(193,127,58,.2);border:1.5px solid #c17f3a;}
     @media print{#sidebar,#statusbar{display:none!important;}#map-wrap{width:100vw!important;height:100vh!important;}body{overflow:visible!important;}}
     #map{grid-area:map;position:relative;}
-    .frame-corner{background:#ffffff;}
+    .frame-corner{background:#faf7f2;}
     .fc-tl{grid-area:ctlf;} .fc-tr{grid-area:ctr;}
     .fc-bl{grid-area:cblf;} .fc-br{grid-area:cbr;}
-    .frame-strip{background:#ffffff;position:relative;overflow:hidden;}
+    .frame-strip{background:#faf7f2;position:relative;overflow:hidden;}
     #fr-top{grid-area:top;} #fr-left{grid-area:left;}
     #fr-right{grid-area:right;} #fr-btm{grid-area:btm;}
     /* tick marks on frame border adjacent to map */
-    #fr-top::after,#fr-btm::before{content:'';display:block;position:absolute;left:0;right:0;height:4px;background:linear-gradient(to right,transparent 0,#b6bec8 0);background-size:1px 100%;}
+    #fr-top::after,#fr-btm::before{content:'';display:block;position:absolute;left:0;right:0;height:4px;background:linear-gradient(to right,transparent 0,#c4b09a 0);background-size:1px 100%;}
     #fr-top::after{bottom:0;}  #fr-btm::before{top:0;}
     #fr-left::after{content:'';display:block;position:absolute;top:0;bottom:0;right:0;width:4px;}
-    .frame-lbl{position:absolute;font-size:9px;color:#656d76;white-space:nowrap;line-height:1;}
+    .frame-lbl{position:absolute;font-size:9px;color:#7a6550;white-space:nowrap;line-height:1;}
 
     /* Status bar */
-    #statusbar{height:22px;background:#f6f8fa;border-top:1px solid #d0d7de;display:flex;align-items:center;padding:0 10px;gap:16px;font-size:9px;color:#656d76;flex-shrink:0;}
+    #statusbar{height:22px;background:#f0ebe3;border-top:1px solid #d4c4b0;display:flex;align-items:center;padding:0 10px;gap:16px;font-size:9px;color:#7a6550;flex-shrink:0;}
 
     /* Loading */
-    #map-loading{display:none;position:absolute;inset:0;background:rgba(0,0,0,.35);z-index:9999;align-items:center;justify-content:center;}
+    #map-loading{display:none;position:absolute;inset:0;background:rgba(61,47,30,.35);z-index:9999;align-items:center;justify-content:center;}
     #map-loading.show{display:flex;}
-    .loading-box{background:#ffffff;border:1px solid #d0d7de;border-radius:9px;padding:14px 22px;text-align:center;font-size:12px;color:#24292f;min-width:170px;box-shadow:0 4px 16px rgba(0,0,0,.12);}
-    .spinner{width:20px;height:20px;border:3px solid #d0d7de;border-top-color:#0969da;border-radius:50%;animation:spin .7s linear infinite;margin:0 auto 6px;}
+    .loading-box{background:#faf7f2;border:1px solid #d4c4b0;border-radius:9px;padding:14px 22px;text-align:center;font-size:12px;color:#3d2f1e;min-width:170px;box-shadow:0 4px 16px rgba(61,47,30,.15);}
+    .spinner{width:20px;height:20px;border:3px solid #d4c4b0;border-top-color:#c17f3a;border-radius:50%;animation:spin .7s linear infinite;margin:0 auto 6px;}
     @keyframes spin{to{transform:rotate(360deg);}}
 
     /* Map overlays */
     .map-overlay{position:absolute;z-index:1000;}
-    #lt-title-el{top:10px;left:50%;transform:translateX(-50%);background:rgba(0,0,0,.6);color:#fff;padding:5px 14px;border-radius:6px;font-size:22px;font-weight:bold;cursor:move;white-space:nowrap;display:none;border:1px solid rgba(255,255,255,.15);text-shadow:1px 1px 3px #000;}
+    #lt-title-el{top:10px;left:50%;transform:translateX(-50%);background:rgba(61,47,30,.75);color:#faf7f2;padding:5px 14px;border-radius:6px;font-size:22px;font-weight:bold;cursor:move;white-space:nowrap;display:none;border:1px solid rgba(250,247,242,.2);text-shadow:1px 1px 3px rgba(0,0,0,.4);}
     #lt-north-el{top:60px;right:10px;width:38px;cursor:move;display:none;}
     #lt-legend-el{bottom:28px;right:8px;background:#fff;border:1px solid #000;border-radius:7px;padding:7px 9px;min-width:160px;min-height:48px;width:max-content;max-width:min(520px,70vw);cursor:move;display:none;overflow:visible;}
     .text-ann{background:transparent;border:none;padding:0;cursor:move;min-width:40px;}
-    .text-ann.selected span{outline:1px dashed #1f6feb;outline-offset:2px;}
+    .text-ann.selected span{outline:1px dashed #c17f3a;outline-offset:2px;}
     .text-ann span{background:transparent;caret-color:transparent;}
     .text-ann.editing span{caret-color:auto;cursor:text;}
     /* Frame drag handles */
-    .frame-drag-handle{position:absolute;left:50%;top:50%;transform:translate(-50%,-50%);display:flex;align-items:center;justify-content:center;z-index:1010;color:#58a6ff;font-size:14px;opacity:.55;user-select:none;border-radius:3px;background:rgba(88,166,255,.1);transition:opacity .15s;}
-    .frame-drag-handle:hover{opacity:1;background:rgba(88,166,255,.22);}
+    .frame-drag-handle{position:absolute;left:50%;top:50%;transform:translate(-50%,-50%);display:flex;align-items:center;justify-content:center;z-index:1010;color:#c17f3a;font-size:14px;opacity:.55;user-select:none;border-radius:3px;background:rgba(193,127,58,.1);transition:opacity .15s;}
+    .frame-drag-handle:hover{opacity:1;background:rgba(193,127,58,.22);}
     .frame-drag-handle.ns{cursor:ns-resize;width:32px;height:12px;}
     .frame-drag-handle.ew{cursor:ew-resize;width:12px;height:32px;writing-mode:vertical-lr;}
-    .frame-drag-preview{position:absolute;pointer-events:none;z-index:1008;background:rgba(88,166,255,.55);}
+    .frame-drag-preview{position:absolute;pointer-events:none;z-index:1008;background:rgba(193,127,58,.45);}
 
     /* Leaflet */
     .leaflet-control-attribution{font-size:8px !important;}
-    .leaflet-bar a{background:#ffffff !important;color:#24292f !important;border-color:#d0d7de !important;}
-    .leaflet-bar a:hover{background:#f6f8fa !important;}
-    .leaflet-popup-content-wrapper{background:#ffffff;color:#24292f;border:1px solid #d0d7de;box-shadow:0 4px 12px rgba(0,0,0,.1);}
-    .leaflet-popup-tip{background:#ffffff;}
+    .leaflet-bar a{background:#faf7f2 !important;color:#3d2f1e !important;border-color:#d4c4b0 !important;}
+    .leaflet-bar a:hover{background:#f0ebe3 !important;}
+    .leaflet-popup-content-wrapper{background:#faf7f2;color:#3d2f1e;border:1px solid #d4c4b0;box-shadow:0 4px 12px rgba(61,47,30,.12);}
+    .leaflet-popup-tip{background:#faf7f2;}
   </style>
 </head>
 <body spellcheck="false">
@@ -278,12 +278,8 @@
           </select>
         </div>
         <div style="border-top:1px solid #21262d;margin:5px 0 4px;"></div>
-        <div class="ctrl-row" style="align-items:stretch;">
-          <span class="ctrl-lbl">Fit to</span>
-          <div style="flex:1;display:grid;grid-template-columns:minmax(0,1fr);gap:4px;">
-            <select id="ref-fit-sel" style="width:100%;background:#0d1117;border:1px solid #30363d;color:#c9d1d9;padding:2px 4px;border-radius:4px;font-size:10px;outline:none;"><option value="">— select layer —</option></select>
-            <button id="ref-fit-btn" style="width:100%;padding:4px 8px;background:#1f6feb;border:none;color:#fff;border-radius:4px;font-size:10px;cursor:pointer;">Fit &amp; Lock</button>
-          </div>
+        <div class="ctrl-row">
+          <button id="ref-fit-btn" style="width:100%;padding:4px 8px;background:#1f6feb;border:none;color:#fff;border-radius:4px;font-size:10px;cursor:pointer;">Fit &amp; Lock Current Frame</button>
         </div>
       </div>
     </div>
@@ -514,6 +510,7 @@ function makeDraggable(el){
   let sx,sy,sl,st;
   el.addEventListener('mousedown',e=>{
     const t=e.target;if(t.tagName==='INPUT'||t.tagName==='SELECT'||t.isContentEditable)return;
+    if(activeTab!=='layout'&&['lt-north-el','custom-scale-el','lt-legend-el'].includes(el.id))return;
     e.preventDefault();e.stopPropagation();map.dragging.disable();
     sx=e.clientX;sy=e.clientY;sl=el.offsetLeft;st=el.offsetTop;
     const mv=e=>{
@@ -532,13 +529,44 @@ let layers=[],layerIdx=0;
 const SWATCHES=['#58a6ff','#3fb950','#ff7b72','#ffa657','#d2a8ff','#79c0ff','#56d364','#ff6e40','#f8cc7a','#bc8cff'];
 const VCOLORS=['#ff7b72','#3fb950','#58a6ff','#ffa657','#d2a8ff','#79c0ff','#f8cc7a','#56d364'];
 
-function updateStatus(){const n=layers.length;document.getElementById('layer-count').textContent=n;document.getElementById('s-layers').textContent=n;syncExtentLayerSel();}
+function updateStatus(){const n=layers.length;document.getElementById('layer-count').textContent=n;document.getElementById('s-layers').textContent=n;}
 function showEmpty(){document.getElementById('layer-list').innerHTML='<div class="empty-state"><div class="es-icon">🗂</div>Drop a file to start.</div>';}
+function syncLayerOrder(){
+  layers.forEach((lo,i)=>{
+    if(!lo.leafletLayer||!lo.visible)return;
+    if(map.hasLayer(lo.leafletLayer))map.removeLayer(lo.leafletLayer);
+    lo.leafletLayer.addTo(map);
+    if(typeof lo.leafletLayer.setZIndex==='function')lo.leafletLayer.setZIndex(300+i);
+    if(typeof lo.leafletLayer.bringToFront==='function')lo.leafletLayer.bringToFront();
+  });
+  refreshLegend();
+}
+function renderLayerList(){
+  const list=document.getElementById('layer-list');
+  list.innerHTML='';
+  if(!layers.length){showEmpty();return;}
+  layers.forEach(lo=>lo.type==='raster'?renderRasterCard(lo):renderVectorCard(lo));
+}
+function moveLayer(id,dir){
+  const i=layers.findIndex(l=>l.id===id),j=i+dir;
+  if(i<0||j<0||j>=layers.length)return;
+  [layers[i],layers[j]]=[layers[j],layers[i]];
+  renderLayerList();syncLayerOrder();
+}
 
 // ── Raster rendering ───────────────────────────────────────────
 function buildPixelFn(lo){
   const{stretchMin,stretchMax,colormap,band,georaster}=lo;
   const nBands=georaster.numberOfRasters,nodata=georaster.noDataValue;
+  if(lo.renderMode==='unique'&&lo.uniqueColors){
+    const bi=band==='rgb'?0:(parseInt(band)||0);
+    return vs=>{
+      const v=vs[bi];
+      if(v==null||isNaN(v))return null;
+      if(nodata!==null&&Math.abs(v-nodata)<1e-6)return null;
+      return lo.uniqueColors[String(v)]||null;
+    };
+  }
   const range=(stretchMax-stretchMin)||1,cm=CMAPS[colormap]||CMAPS.viridis;
   if(nBands>=3&&band==='rgb'){
     const mn=stretchMin,rng=range;
@@ -546,6 +574,33 @@ function buildPixelFn(lo){
   }
   const bi=band==='rgb'?0:(parseInt(band)||0);
   return vs=>{const v=vs[bi];if(v==null||isNaN(v))return null;if(nodata!==null&&Math.abs(v-nodata)<1e-6)return null;return cm(Math.max(0,Math.min(1,(v-stretchMin)/range)));};
+}
+
+function collectUniqueValues(georaster,bandIndex,limit=80){
+  const vals=georaster.values?.[bandIndex];
+  const nodata=georaster.noDataValue;
+  const out=new Set();
+  const walk=v=>{
+    if(out.size>limit)return;
+    if(Array.isArray(v)||ArrayBuffer.isView(v)){for(const x of v)walk(x);return;}
+    if(v==null||isNaN(v))return;
+    if(nodata!==null&&Math.abs(v-nodata)<1e-6)return;
+    out.add(v);
+  };
+  walk(vals);
+  return [...out].sort((a,b)=>a-b);
+}
+function makeUniqueColors(values){
+  const cm=CMAPS.viridis,den=Math.max(1,values.length-1),colors={};
+  values.forEach((v,i)=>colors[String(v)]=cm(i/den));
+  return colors;
+}
+function ensureUniqueValues(lo){
+  const bi=lo.band==='rgb'?0:(parseInt(lo.band)||0);
+  lo.uniqueValues=collectUniqueValues(lo.georaster,bi);
+  if(!lo.uniqueColors)lo.uniqueColors={};
+  const fresh=makeUniqueColors(lo.uniqueValues);
+  lo.uniqueValues.forEach(v=>{const k=String(v);if(!lo.uniqueColors[k])lo.uniqueColors[k]=fresh[k];});
 }
 function applyRender(lo){
   if(!lo.leafletLayer||!lo.visible)return;
@@ -567,7 +622,7 @@ function renderRasterCard(lo){
     <div class="layer-hdr">
       <div class="layer-swatch" style="background:${SWATCHES[lo.id%SWATCHES.length]}"></div>
       <div class="layer-name" title="${lo.name}">${lo.name}</div>${lb}<span class="badge b-bands">${nb}B</span>
-      <div class="layer-acts"><button class="lb vis-btn">${lo.visible?'👁':'🙈'}</button><button class="lb zoom-btn">⌖</button><button class="lb danger rem-btn">✕</button></div>
+      <div class="layer-acts"><button class="lb up-btn" title="Move above">↑</button><button class="lb down-btn" title="Move below">↓</button><button class="lb vis-btn">${lo.visible?'👁':'🙈'}</button><button class="lb zoom-btn">⌖</button><button class="lb danger rem-btn">✕</button></div>
     </div>
     <div class="layer-body">
       <div class="stats-grid">
@@ -586,6 +641,8 @@ function renderRasterCard(lo){
     </div>`;
   const q=s=>card.querySelector(s);
   const zfn=()=>{try{map.fitBounds(lo.leafletLayer.getBounds());}catch(e){}};
+  q('.up-btn').addEventListener('click',()=>moveLayer(lo.id,1));
+  q('.down-btn').addEventListener('click',()=>moveLayer(lo.id,-1));
   q('.vis-btn').addEventListener('click',function(){lo.visible=!lo.visible;this.textContent=lo.visible?'👁':'🙈';lo.visible?lo.leafletLayer.addTo(map):map.removeLayer(lo.leafletLayer);refreshLegend();});
   q('.zoom-btn').addEventListener('click',zfn);q('.zf-btn').addEventListener('click',zfn);
   q('.rem-btn').addEventListener('click',()=>{if(map.hasLayer(lo.leafletLayer))map.removeLayer(lo.leafletLayer);layers=layers.filter(l=>l.id!==lo.id);card.remove();updateStatus();refreshLegend();if(!layers.length)showEmpty();});
@@ -627,7 +684,7 @@ function renderVectorCard(lo){
     <div class="layer-hdr">
       <div class="layer-swatch" style="background:${lo.strokeColor}"></div>
       <div class="layer-name" title="${lo.name}">${lo.name}</div><span class="badge b-shp">SHP</span>
-      <div class="layer-acts"><button class="lb vis-btn">${lo.visible?'👁':'🙈'}</button><button class="lb zoom-btn">⌖</button><button class="lb danger rem-btn">✕</button></div>
+      <div class="layer-acts"><button class="lb up-btn" title="Move above">↑</button><button class="lb down-btn" title="Move below">↓</button><button class="lb vis-btn">${lo.visible?'👁':'🙈'}</button><button class="lb zoom-btn">⌖</button><button class="lb danger rem-btn">✕</button></div>
     </div>
     <div class="layer-body">
       <div class="stats-grid c2">
@@ -637,12 +694,15 @@ function renderVectorCard(lo){
       <div class="ctrl-row"><span class="ctrl-lbl">Stroke</span><input type="color" class="sc" value="${lo.strokeColor}"/><span class="ctrl-lbl" style="width:28px;text-align:right">Fill</span><input type="color" class="fc" value="${lo.fillColor}"/></div>
       <div class="ctrl-row"><span class="ctrl-lbl">Fill α</span><input type="range" class="fo" min="0" max="1" step=".05" value="${lo.fillOpacity}"/><span class="pct fo-p">${Math.round(lo.fillOpacity*100)}%</span></div>
       <div class="ctrl-row"><span class="ctrl-lbl">Width</span><input type="range" class="sw" min=".5" max="6" step=".5" value="${lo.strokeWidth}"/><span class="pct sw-p">${lo.strokeWidth}px</span></div>
+      <div class="ctrl-row"><span class="ctrl-lbl">Point</span><input type="range" class="ps" min="1" max="20" step="1" value="${lo.pointRadius}"/><span class="pct ps-p">${lo.pointRadius}px</span></div>
       <div class="ctrl-row"><span class="ctrl-lbl">Opacity</span><input type="range" class="op-sl" min="0" max="1" step=".05" value="${lo.opacity}"/><span class="pct op-pct">${Math.round(lo.opacity*100)}%</span></div>
       <button class="act-btn zf-btn">⌖ Zoom to layer</button>
     </div>`;
   const q=s=>card.querySelector(s);
-  const applyS=()=>{const s={color:lo.strokeColor,fillColor:lo.fillColor,fillOpacity:lo.fillOpacity,weight:lo.strokeWidth,opacity:lo.opacity};lo.leafletLayer.setStyle(s);lo.leafletLayer.eachLayer(l=>{if(l.setStyle)l.setStyle(s);});refreshLegend();};
+  const applyS=()=>{const s={color:lo.strokeColor,fillColor:lo.fillColor,fillOpacity:lo.fillOpacity,weight:lo.strokeWidth,opacity:lo.opacity};lo.leafletLayer.setStyle(s);lo.leafletLayer.eachLayer(l=>{if(l.setStyle)l.setStyle(s);if(l.setRadius)l.setRadius(lo.pointRadius);});refreshLegend();};
   const zfn=()=>{try{map.fitBounds(lo.leafletLayer.getBounds());}catch(e){}};
+  q('.up-btn').addEventListener('click',()=>moveLayer(lo.id,1));
+  q('.down-btn').addEventListener('click',()=>moveLayer(lo.id,-1));
   q('.vis-btn').addEventListener('click',function(){lo.visible=!lo.visible;this.textContent=lo.visible?'👁':'🙈';lo.visible?lo.leafletLayer.addTo(map):map.removeLayer(lo.leafletLayer);refreshLegend();});
   q('.zoom-btn').addEventListener('click',zfn);q('.zf-btn').addEventListener('click',zfn);
   q('.rem-btn').addEventListener('click',()=>{if(map.hasLayer(lo.leafletLayer))map.removeLayer(lo.leafletLayer);layers=layers.filter(l=>l.id!==lo.id);card.remove();updateStatus();refreshLegend();if(!layers.length)showEmpty();});
@@ -650,6 +710,7 @@ function renderVectorCard(lo){
   q('.fc').addEventListener('input',e=>{lo.fillColor=e.target.value;applyS();});
   q('.fo').addEventListener('input',e=>{lo.fillOpacity=parseFloat(e.target.value);q('.fo-p').textContent=Math.round(lo.fillOpacity*100)+'%';applyS();});
   q('.sw').addEventListener('input',e=>{lo.strokeWidth=parseFloat(e.target.value);q('.sw-p').textContent=lo.strokeWidth+'px';applyS();});
+  q('.ps').addEventListener('input',e=>{lo.pointRadius=parseInt(e.target.value);q('.ps-p').textContent=lo.pointRadius+'px';applyS();});
   q('.op-sl').addEventListener('input',e=>{lo.opacity=parseFloat(e.target.value);q('.op-pct').textContent=Math.round(lo.opacity*100)+'%';applyS();});
   const list=document.getElementById('layer-list');list.querySelector('.empty-state')?.remove();list.insertBefore(card,list.firstChild);
 }
@@ -658,10 +719,10 @@ async function processVector(geojson,name,fileSize){
   const id=layerIdx++;const color=VCOLORS[id%VCOLORS.length];
   const lo={id,name:name.replace(/\.(shp|zip)$/i,''),type:'vector',geojson,
     strokeColor:color,fillColor:color,fillOpacity:.3,strokeWidth:1.5,opacity:.9,
-    visible:true,leafletLayer:null,fileSize,featureCount:geojson.features?.length||0};
+    pointRadius:5,visible:true,leafletLayer:null,fileSize,featureCount:geojson.features?.length||0};
   const gl=L.geoJSON(geojson,{
     style:{color:lo.strokeColor,fillColor:lo.fillColor,fillOpacity:lo.fillOpacity,weight:lo.strokeWidth,opacity:lo.opacity},
-    pointToLayer:(f,ll)=>L.circleMarker(ll,{radius:5,color:lo.strokeColor,fillColor:lo.fillColor,fillOpacity:lo.fillOpacity,weight:lo.strokeWidth}),
+    pointToLayer:(f,ll)=>L.circleMarker(ll,{radius:lo.pointRadius,color:lo.strokeColor,fillColor:lo.fillColor,fillOpacity:lo.fillOpacity,weight:lo.strokeWidth}),
     onEachFeature:(f,layer)=>{if(f.properties&&Object.keys(f.properties).length){const rows=Object.entries(f.properties).map(([k,v])=>`<tr><td style="color:#8b949e;padding:2px 8px 2px 0;font-size:10px">${k}</td><td style="font-size:10px">${v??''}</td></tr>`).join('');layer.bindPopup(`<div style="max-height:200px;overflow:auto"><table>${rows}</table></div>`,{maxWidth:260});}}
   }).addTo(map);
   lo.leafletLayer=gl;layers.push(lo);
@@ -744,11 +805,72 @@ document.querySelectorAll('.accordion-hdr').forEach(hdr=>{
 });
 
 // ── Tabs ────────────────────────────────────────────────────────
+let activeTab='data',restoringTabView=false;
+const tabViews={data:null,layout:null};
+const layoutOverlayIds=['custom-scale-el','lt-north-el','lt-legend-el'];
+const layoutOverlayStyles={};
+function captureMapView(){
+  const c=map.getCenter();
+  return{lat:c.lat,lng:c.lng,zoom:map.getZoom()};
+}
+function saveActiveTabView(){
+  if(!restoringTabView)tabViews[activeTab]=captureMapView();
+}
+function restoreTabView(tab){
+  if(!tabViews[tab]){tabViews[tab]=captureMapView();return;}
+  restoringTabView=true;
+  const v=tabViews[tab];
+  map.setView([v.lat,v.lng],v.zoom,{animate:false});
+  setTimeout(()=>{
+    restoringTabView=false;
+    map.invalidateSize();
+    updateLayoutOverlayVisibility();
+    updateScaleBar();
+  },0);
+}
+function captureOverlayStyles(){
+  layoutOverlayIds.forEach(id=>{
+    const el=document.getElementById(id);
+    layoutOverlayStyles[id]={left:el.style.left,top:el.style.top,right:el.style.right,bottom:el.style.bottom,transform:el.style.transform};
+  });
+}
+function restoreOverlayStyles(){
+  layoutOverlayIds.forEach(id=>{
+    const el=document.getElementById(id),s=layoutOverlayStyles[id];
+    if(!s)return;
+    Object.assign(el.style,s);
+  });
+}
+function applyDataOverlayPositions(){
+  Object.assign(document.getElementById('custom-scale-el').style,{left:'10px',bottom:'10px',right:'auto',top:'auto',transform:'none'});
+  Object.assign(document.getElementById('lt-north-el').style,{right:'10px',top:'60px',left:'auto',bottom:'auto',transform:'none'});
+  Object.assign(document.getElementById('lt-legend-el').style,{right:'8px',bottom:'28px',left:'auto',top:'auto',transform:'none'});
+}
+function updateLayoutOverlayVisibility(){
+  const show=activeTab==='layout';
+  if(!show){
+    applyDataOverlayPositions();
+    document.getElementById('frame-scope-svg').style.display='none';
+    document.getElementById('frame-handles-wrap').style.display='none';
+    if(gratLayer){map.removeLayer(gratLayer);gratLayer=null;}
+    return;
+  }
+  restoreOverlayStyles();
+  if(frameEnabled)drawFrameScope();
+  if(gratEnabled)buildGrat();
+}
 document.querySelectorAll('.tab-btn').forEach(b=>b.addEventListener('click',()=>{
+  if(b.dataset.tab===activeTab)return;
+  if(activeTab==='layout')captureOverlayStyles();
+  saveActiveTabView();
   document.querySelectorAll('.tab-btn').forEach(x=>x.classList.remove('active'));
   document.querySelectorAll('.tab-panel').forEach(p=>p.style.display='none');
-  b.classList.add('active');document.getElementById(`tab-${b.dataset.tab}`).style.display='';
+  activeTab=b.dataset.tab;
+  b.classList.add('active');document.getElementById(`tab-${activeTab}`).style.display='';
+  restoreTabView(activeTab);
+  updateLayoutOverlayVisibility();
 }));
+applyDataOverlayPositions();
 
 // ── Coordinate Frame (Floating Scope) ─────────────────────────
 let frameEnabled=false,frameInterval=10,frameColor='#000000',frameFontSize=16;
@@ -778,6 +900,9 @@ function addSVGEl(ns,tag,attrs){
 function drawFrameScope(){
   const svgEl=document.getElementById('frame-scope-svg');
   const hwrap=document.getElementById('frame-handles-wrap');
+  if(activeTab!=='layout'){
+    svgEl.style.display='none'; hwrap.style.display='none'; return;
+  }
   if(!frameEnabled||!frameLatLng){
     svgEl.style.display='none'; hwrap.style.display='none'; return;
   }
@@ -888,7 +1013,7 @@ function syncExtentFromFrame(){
   if(gratEnabled)buildGrat();
 }
 
-map.on('moveend zoomend',()=>{if(frameEnabled)drawFrameScope();if(gratEnabled)buildGrat();updateScaleBar();});
+map.on('moveend zoomend',()=>{saveActiveTabView();updateLayoutOverlayVisibility();updateScaleBar();});
 document.getElementById('lt-frame-on').addEventListener('change',e=>{
   frameEnabled=e.target.checked;
   if(frameEnabled&&!frameLatLng)initFrameLatLng();
@@ -903,7 +1028,7 @@ document.getElementById('lt-frame-color').addEventListener('input',e=>{frameColo
 function buildGrat(){
   if(gratLayer){map.removeLayer(gratLayer);gratLayer=null;}
   updateGratLabels();
-  if(!gratEnabled||!frameEnabled||!frameLatLng)return;
+  if(activeTab!=='layout'||!gratEnabled||!frameEnabled||!frameLatLng)return;
   const lines=[];
   const n=Math.min(90,frameLatLng.n),s=Math.max(-90,frameLatLng.s),e=frameLatLng.e,w=frameLatLng.w;
   const snapUp=v=>Math.ceil((v-1e-9)/gratInterval)*gratInterval;
@@ -1170,7 +1295,7 @@ function saveProject(){
     layout:getLayoutState(),
     layers:layers.map(lo=>{
       if(lo.type==='raster')return{type:'raster',name:lo.name,legendName:lo.legendName,source:lo.isUrl?'url':'file',url:lo.sourceUrl,colormap:lo.colormap,band:lo.band,stretchMin:lo.stretchMin,stretchMax:lo.stretchMax,opacity:lo.opacity,visible:lo.visible};
-      return{type:'vector',name:lo.name,legendName:lo.legendName,source:'embedded',geojson:lo.geojson,strokeColor:lo.strokeColor,fillColor:lo.fillColor,fillOpacity:lo.fillOpacity,strokeWidth:lo.strokeWidth,opacity:lo.opacity,visible:lo.visible};
+      return{type:'vector',name:lo.name,legendName:lo.legendName,source:'embedded',geojson:lo.geojson,strokeColor:lo.strokeColor,fillColor:lo.fillColor,fillOpacity:lo.fillOpacity,strokeWidth:lo.strokeWidth,pointRadius:lo.pointRadius,opacity:lo.opacity,visible:lo.visible};
     }),
   };
   const url=URL.createObjectURL(new Blob([JSON.stringify(project,null,2)],{type:'application/json'}));
@@ -1233,7 +1358,7 @@ async function loadProject(file){
     }else if(ld.type==='vector'&&ld.geojson){
       await processVector(ld.geojson,ld.name+'.shp',null);
       const lo=layers[layers.length-1];
-      if(lo){Object.assign(lo,{legendName:ld.legendName,strokeColor:ld.strokeColor,fillColor:ld.fillColor,fillOpacity:ld.fillOpacity,strokeWidth:ld.strokeWidth,opacity:ld.opacity,visible:ld.visible});renderVectorCard(lo);}
+      if(lo){Object.assign(lo,{legendName:ld.legendName,strokeColor:ld.strokeColor,fillColor:ld.fillColor,fillOpacity:ld.fillOpacity,strokeWidth:ld.strokeWidth,pointRadius:ld.pointRadius||5,opacity:ld.opacity,visible:ld.visible});renderVectorCard(lo);}
     }
   }
   refreshLegend();
@@ -1242,19 +1367,9 @@ async function loadProject(file){
 // ── Layer Fit & Lock ───────────────────────────────────────────
 let extentLocked=false;
 
-function syncExtentLayerSel(){
-  ['ref-fit-sel'].forEach(id=>{
-    const sel=document.getElementById(id);if(!sel)return;
-    const cur=sel.value;
-    sel.innerHTML='<option value="">— select layer —</option>'+layers.map(lo=>`<option value="${lo.id}">${lo.name}</option>`).join('');
-    if(layers.find(l=>l.id===parseInt(cur)))sel.value=cur;
-  });
-}
-
-function fitAndSyncLayer(layerId,andLock){
+function fitAndSyncLayer(andLock){
   try{
-    const lo=layers.find(l=>l.id===layerId);
-    const b=lo?lo.leafletLayer.getBounds():(frameLatLng?L.latLngBounds([[frameLatLng.s,frameLatLng.w],[frameLatLng.n,frameLatLng.e]]):map.getBounds());
+    const b=frameLatLng?L.latLngBounds([[frameLatLng.s,frameLatLng.w],[frameLatLng.n,frameLatLng.e]]):map.getBounds();
     frameLatLng={n:b.getNorth(),s:b.getSouth(),e:b.getEast(),w:b.getWest()};
     map.fitBounds(b,{padding:[0,0]});
     if(andLock){extentLocked=true;map.setMaxBounds(b.pad(0.02));}
@@ -1263,12 +1378,11 @@ function fitAndSyncLayer(layerId,andLock){
   }catch(e){}
 }
 document.getElementById('ref-fit-btn').addEventListener('click',()=>{
-  const id=parseInt(document.getElementById('ref-fit-sel').value);
   if(!frameEnabled){
     const frameToggle=document.getElementById('lt-frame-on');
     frameToggle.checked=true;frameToggle.dispatchEvent(new Event('change'));
   }
-  fitAndSyncLayer(isNaN(id)?null:id,true);
+  fitAndSyncLayer(true);
   if(frameEnabled)setTimeout(drawFrameScope,250);
 });
 
