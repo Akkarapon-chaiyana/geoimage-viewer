@@ -11,13 +11,12 @@
 
     /* ── Sidebar ── */
     #sidebar{width:280px;min-width:280px;height:100vh;display:flex;flex-direction:column;background:#f5f5f5;border-right:1px solid #c8c8c8;overflow:hidden;}
-    #app-header{padding:8px 12px;background:#e8e8e8;border-bottom:1px solid #c8c8c8;flex-shrink:0;}
-    #app-header .row1{display:flex;align-items:center;gap:8px;}
-    #app-header .logo{font-size:18px;}
-    #app-header .title{font-size:14px;font-weight:600;color:#4a7090;}
-    #app-header .contact{font-size:9px;color:#808080;margin-top:2px;padding-left:2px;}
-    #app-header .contact a{color:#808080;text-decoration:none;}
-    #app-header .contact a:hover{color:#4a7090;}
+    #app-header{padding:12px 12px 10px;background:linear-gradient(150deg,#1a2d50 0%,#2c4a82 100%);border-bottom:2px solid #3d6bb8;flex-shrink:0;text-align:center;}
+    #app-header .title{font-size:15px;font-weight:700;color:#fff;letter-spacing:0.3px;text-shadow:0 1px 3px rgba(0,0,0,.3);}
+    #app-header .contact{font-size:11px;color:rgba(170,205,245,.85);margin-top:4px;line-height:1.6;}
+    #app-header .contact a{color:rgba(170,205,245,.85);text-decoration:none;}
+    #app-header .contact a:hover{color:#8ecfff;text-decoration:underline;}
+    #app-header .name{font-size:11px;font-weight:500;color:rgba(170,205,245,.85);display:block;margin-top:1px;}
 
     /* Tabs */
     #tab-bar{display:flex;border-bottom:1px solid #c8c8c8;flex-shrink:0;}
@@ -118,10 +117,16 @@
     #tab-layout::-webkit-scrollbar{width:3px;}
     #tab-layout::-webkit-scrollbar-thumb{background:#c8c8c8;}
     .lt-grp{background:#f5f5f5;border:1px solid #c8c8c8;border-radius:6px;margin-bottom:5px;overflow:hidden;}
-    .lt-hdr{padding:6px 9px;display:flex;align-items:center;justify-content:space-between;font-size:10px;font-weight:500;color:#2c2c2c;}
-    .lt-hdr label{display:flex;align-items:center;gap:6px;cursor:pointer;}
+    .lt-hdr{padding:6px 9px;display:flex;align-items:center;gap:6px;font-size:10px;font-weight:500;color:#2c2c2c;cursor:pointer;user-select:none;}
+    .lt-hdr:hover{background:#ececec;}
+    .lt-hdr label{display:flex;align-items:center;gap:6px;cursor:pointer;flex:1;}
+    .lt-hdr .lt-hdr-title{flex:1;}
     .lt-hdr input[type=checkbox]{accent-color:#4a7090;}
+    .lt-toggle{width:18px;height:18px;border:1px solid #c8c8c8;background:#e8e8e8;color:#606060;border-radius:3px;display:flex;align-items:center;justify-content:center;font-size:11px;flex-shrink:0;transition:transform .15s;}
+    .lt-hdr:hover .lt-toggle{background:#d9d9d9;}
+    .lt-toggle.collapsed{transform:rotate(-90deg);}
     .lt-body{padding:6px 9px 8px;border-top:1px solid #d9d9d9;}
+    .lt-body.collapsed{display:none;border-top:none;}
     .lt-body .ctrl-row{margin-bottom:4px;}
     .save-row{display:flex;gap:4px;margin-top:2px;}
     .save-btn{flex:1;padding:5px;background:#d9d9d9;border:1px solid #c8c8c8;color:#2c2c2c;border-radius:5px;cursor:pointer;font-size:10px;transition:all .15s;}
@@ -198,8 +203,8 @@
 <!-- ══ SIDEBAR ══ -->
 <div id="sidebar">
   <div id="app-header">
-    <div class="row1"><span class="logo">🛰</span><span class="title">GeoImage Viewer</span></div>
-    <div class="contact">Akkarapon Chaiyana · <a href="mailto:akkarapon.c@nie.edu.sg">akkarapon.c@nie.edu.sg</a></div>
+    <div class="title">GeoImage Viewer</div>
+    <span class="name">Akkarapon Chaiyana, D.Eng.</span>
   </div>
 
   <div id="tab-bar">
@@ -264,7 +269,7 @@
 
     <!-- Coordinate Reference (Frame + Grid merged) -->
     <div class="lt-grp">
-      <div class="lt-hdr">Coordinate Reference</div>
+      <div class="lt-hdr"><span class="lt-toggle">▾</span><span class="lt-hdr-title">Coordinate Reference</span></div>
       <div class="lt-body">
         <div class="ctrl-row"><span class="ctrl-lbl">Interval</span>
           <select id="lt-ref-int"><option value="0.1">0.1°</option><option value="0.25">0.25°</option><option value="0.5">0.5°</option><option value="1" selected>1°</option><option value="2">2°</option><option value="5">5°</option><option value="10">10°</option><option value="15">15°</option><option value="30">30°</option></select>
@@ -318,7 +323,7 @@
 
     <!-- North Arrow -->
     <div class="lt-grp">
-      <div class="lt-hdr"><label><input type="checkbox" id="lt-north-on" checked> North Arrow</label></div>
+      <div class="lt-hdr"><span class="lt-toggle">▾</span><label><input type="checkbox" id="lt-north-on" checked> North Arrow</label></div>
       <div class="lt-body">
         <div class="ctrl-row"><span class="ctrl-lbl">Style</span>
           <select id="lt-north-style"><option value="classic">Classic</option><option value="triangle" selected>Triangle</option><option value="compass">Compass</option></select>
@@ -330,7 +335,7 @@
 
     <!-- Scale Bar -->
     <div class="lt-grp">
-      <div class="lt-hdr"><label><input type="checkbox" id="lt-scale-on" checked> Scale Bar</label></div>
+      <div class="lt-hdr"><span class="lt-toggle">▾</span><label><input type="checkbox" id="lt-scale-on" checked> Scale Bar</label></div>
       <div class="lt-body">
         <div class="ctrl-row"><span class="ctrl-lbl">Unit</span>
           <select id="lt-scale-unit"><option value="km">km</option><option value="mi">mi</option><option value="m">m</option></select>
@@ -376,7 +381,7 @@
 
     <!-- Legend -->
     <div class="lt-grp">
-      <div class="lt-hdr"><label><input type="checkbox" id="lt-legend-on" checked> Legend</label></div>
+      <div class="lt-hdr"><span class="lt-toggle">▾</span><label><input type="checkbox" id="lt-legend-on" checked> Legend</label></div>
       <div class="lt-body">
         <div class="ctrl-row"><span class="ctrl-lbl">Box color</span>
           <input type="color" id="lt-legend-bg-color" value="#ffffff"/>
@@ -406,7 +411,7 @@
 
     <!-- Text Annotations -->
     <div class="lt-grp">
-      <div class="lt-hdr">Text Annotations</div>
+      <div class="lt-hdr"><span class="lt-toggle">▾</span><span class="lt-hdr-title">Text Annotations</span></div>
       <div class="lt-body">
         <div class="ctrl-row"><span class="ctrl-lbl">Size</span><input type="range" id="lt-txt-size" min="10" max="36" value="14"/><span class="pct" id="lt-txt-sz-v">14px</span></div>
         <div class="ctrl-row"><span class="ctrl-lbl">Color</span><input type="color" id="lt-txt-color" value="#000000"/></div>
@@ -905,6 +910,16 @@ document.getElementById('url-btn').addEventListener('click',()=>{const u=urlInpu
 urlInput.addEventListener('keydown',e=>{if(e.key==='Enter')document.getElementById('url-btn').click();});
 
 // ── Accordions ─────────────────────────────────────────────────
+document.querySelectorAll('.lt-hdr').forEach(hdr=>{
+  hdr.addEventListener('click',e=>{
+    if(e.target.closest('input[type=checkbox]'))return;
+    const body=hdr.nextElementSibling;
+    if(!body||!body.classList.contains('lt-body'))return;
+    const collapsed=body.classList.toggle('collapsed');
+    hdr.querySelector('.lt-toggle')?.classList.toggle('collapsed',collapsed);
+  });
+});
+
 document.querySelectorAll('.accordion-hdr').forEach(hdr=>{
   const bodyId=hdr.id.replace('-hdr','-body');
   if(hdr.classList.contains('open'))document.getElementById(bodyId).style.display='';

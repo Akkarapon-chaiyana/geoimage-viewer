@@ -29,11 +29,13 @@ A browser-based geospatial viewer for GeoTIFF rasters and Shapefiles — no serv
 
 ## Usage
 
-Open `index.html` in any modern browser — no installation or build step needed.
+Open `GeoImage_Viewer.html` in any modern browser — no installation or build step needed.
 
 ```
-open index.html
+open GeoImage_Viewer.html
 ```
+
+When prompted, enter the password: **`121616`**
 
 For COG streaming, serve from a web server that sends CORS headers, or use a public COG URL.
 
@@ -53,4 +55,4 @@ For COG streaming, serve from a web server that sends CORS headers, or use a pub
 
 ## Author
 
-Akkarapon Chaiyana · [akkarapon.c@nie.edu.sg](mailto:akkarapon.c@nie.edu.sg)
+Akkarapon Chaiyana, D.Eng.
