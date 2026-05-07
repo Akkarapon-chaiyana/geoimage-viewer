@@ -59,6 +59,13 @@
     /* Layer list */
     #layers-hdr{padding:5px 10px;font-size:9px;text-transform:uppercase;letter-spacing:1px;color:#808080;border-bottom:1px solid #c8c8c8;display:flex;justify-content:space-between;align-items:center;flex-shrink:0;}
     #layer-count{background:#d9d9d9;border:1px solid #c8c8c8;padding:0 6px;border-radius:20px;font-size:9px;color:#2c2c2c;}
+    #btn-collapse-all{font-size:8px;padding:1px 6px;border:1px solid #c8c8c8;background:#e8e8e8;color:#606060;border-radius:3px;cursor:pointer;text-transform:none;letter-spacing:0;}
+    #btn-collapse-all:hover{background:#d9d9d9;color:#2c2c2c;}
+    .layer-toggle{width:22px;height:22px;border:1px solid #c8c8c8;background:#e8e8e8;color:#606060;cursor:pointer;font-size:13px;display:flex;align-items:center;justify-content:center;flex-shrink:0;padding:0;border-radius:4px;transition:transform .15s;}
+    .layer-toggle:hover{background:#d9d9d9;color:#2c2c2c;}
+    .layer-toggle.collapsed{transform:rotate(-90deg);}
+    .layer-body{padding:6px 8px;border-top:1px solid #e8e8e8;}
+    .layer-body.collapsed{display:none;border-top:none;}
     #layer-list{flex:1 1 auto;min-height:0;overflow-y:auto;padding:5px;}
     #layer-list::-webkit-scrollbar{width:3px;}
     #layer-list::-webkit-scrollbar-thumb{background:#c8c8c8;}
@@ -68,41 +75,41 @@
     /* Layer card */
     .layer-item{background:#f5f5f5;border:1px solid #c8c8c8;border-radius:6px;margin-bottom:4px;overflow:hidden;}
     .layer-item:hover{border-color:#9ab0c0;}
-    .layer-hdr{padding:6px 7px 6px 9px;display:flex;align-items:center;gap:5px;}
-    .layer-swatch{width:8px;height:8px;border-radius:50%;flex-shrink:0;}
-    .layer-name{flex:1;font-size:10px;font-weight:500;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;color:#2c2c2c;}
-    .badge{font-size:8px;padding:1px 4px;border-radius:3px;flex-shrink:0;}
+    .layer-hdr{padding:7px 8px 7px 9px;display:flex;align-items:center;gap:6px;}
+    .layer-swatch{width:10px;height:10px;border-radius:50%;flex-shrink:0;}
+    .layer-name{flex:1;font-size:12px;font-weight:500;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;color:#2c2c2c;}
+    .badge{font-size:9px;padding:1px 5px;border-radius:3px;flex-shrink:0;}
     .b-bands{background:#d9d9d9;color:#606060;border:1px solid #c8c8c8;}
     .b-cog{background:#e8f5e9;color:#2e7d32;border:1px solid #a5d6a7;}
     .b-url{background:#e8f0fe;color:#1a56db;border:1px solid #93b4f8;}
     .b-file{background:#fff3e0;color:#e65100;border:1px solid #ffb74d;}
     .b-shp{background:#f3e5f5;color:#6a1b9a;border:1px solid #ce93d8;}
-    .layer-acts{display:flex;gap:2px;}
-    .lb{width:20px;height:20px;border:none;background:#d9d9d9;color:#606060;border-radius:4px;cursor:pointer;font-size:10px;display:flex;align-items:center;justify-content:center;transition:all .15s;}
+    .layer-acts{display:flex;gap:3px;}
+    .lb{width:22px;height:22px;border:none;background:#d9d9d9;color:#606060;border-radius:4px;cursor:pointer;font-size:11px;display:flex;align-items:center;justify-content:center;transition:all .15s;}
     .lb:hover{background:#c8c8c8;color:#2c2c2c;}
     .lb.danger:hover{background:#b91c1c;color:#fff;}
-    .layer-body{padding:6px 8px;border-top:1px solid #e8e8e8;}
-    .stats-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:3px;margin-bottom:5px;}
+    .layer-body{padding:8px 10px;border-top:1px solid #e8e8e8;}
+    .stats-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:4px;margin-bottom:7px;}
     .stats-grid.c2{grid-template-columns:repeat(2,1fr);}
-    .stat-box{background:#e8e8e8;border:1px solid #d9d9d9;padding:2px 4px;border-radius:3px;}
-    .stat-lbl{font-size:8px;color:#808080;text-transform:uppercase;}
-    .stat-val{font-size:9px;font-weight:600;color:#2c2c2c;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;}
-    .colorbar{height:5px;border-radius:2px;margin-bottom:5px;border:1px solid #c8c8c8;}
-    .ctrl-row{display:flex;align-items:center;gap:4px;margin-bottom:4px;}
-    .ctrl-lbl{font-size:9px;color:#808080;width:46px;flex-shrink:0;}
-    .ctrl-row select,.ctrl-row input[type="number"],.ctrl-row input[type="text"]{flex:1;background:#f5f5f5;border:1px solid #c8c8c8;color:#2c2c2c;padding:2px 4px;border-radius:4px;font-size:10px;outline:none;}
+    .stat-box{background:#e8e8e8;border:1px solid #d9d9d9;padding:3px 5px;border-radius:3px;}
+    .stat-lbl{font-size:9px;color:#808080;text-transform:uppercase;}
+    .stat-val{font-size:11px;font-weight:600;color:#2c2c2c;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;}
+    .colorbar{height:6px;border-radius:2px;margin-bottom:7px;border:1px solid #c8c8c8;}
+    .ctrl-row{display:flex;align-items:center;gap:5px;margin-bottom:5px;}
+    .ctrl-lbl{font-size:11px;color:#808080;width:52px;flex-shrink:0;}
+    .ctrl-row select,.ctrl-row input[type="number"],.ctrl-row input[type="text"]{flex:1;background:#f5f5f5;border:1px solid #c8c8c8;color:#2c2c2c;padding:3px 5px;border-radius:4px;font-size:11px;outline:none;}
     .ctrl-row select:focus,.ctrl-row input:focus{border-color:#4a7090;box-shadow:0 0 0 2px rgba(74,112,144,.15);}
-    .ctrl-row input[type="color"]{width:44px;height:20px;padding:1px;border:1px solid #c8c8c8;border-radius:4px;background:#f5f5f5;cursor:pointer;}
+    .ctrl-row input[type="color"]{width:44px;height:22px;padding:1px;border:1px solid #c8c8c8;border-radius:4px;background:#f5f5f5;cursor:pointer;}
     .ctrl-row input[type="color"][data-none="true"]{opacity:.45;}
-    .no-color-btn{padding:2px 6px;background:#e8e8e8;border:1px solid #c8c8c8;color:#606060;border-radius:4px;font-size:9px;cursor:pointer;white-space:nowrap;}
+    .no-color-btn{padding:2px 7px;background:#e8e8e8;border:1px solid #c8c8c8;color:#606060;border-radius:4px;font-size:10px;cursor:pointer;white-space:nowrap;}
     .no-color-btn.active{background:#2c2c2c;color:#fff;border-color:#2c2c2c;}
-    .srow{display:grid;grid-template-columns:14px 1fr 14px 1fr;gap:3px;align-items:center;margin-bottom:4px;}
-    .srow label{font-size:9px;color:#808080;text-align:center;}
-    .srow input{background:#f5f5f5;border:1px solid #c8c8c8;color:#2c2c2c;padding:2px 3px;border-radius:4px;font-size:10px;width:100%;outline:none;}
-    input[type="range"]{flex:1;height:3px;appearance:none;background:#c8c8c8;border-radius:2px;outline:none;}
-    input[type="range"]::-webkit-slider-thumb{appearance:none;width:11px;height:11px;border-radius:50%;background:#4a7090;cursor:pointer;border:2px solid #f5f5f5;}
-    .pct{font-size:9px;color:#606060;width:24px;text-align:right;flex-shrink:0;}
-    .act-btn{width:100%;padding:3px;background:#e8e8e8;border:1px solid #c8c8c8;color:#606060;border-radius:4px;cursor:pointer;font-size:9px;margin-bottom:3px;transition:all .15s;}
+    .srow{display:grid;grid-template-columns:18px 1fr 18px 1fr;gap:4px;align-items:center;margin-bottom:5px;}
+    .srow label{font-size:10px;color:#808080;text-align:center;}
+    .srow input{background:#f5f5f5;border:1px solid #c8c8c8;color:#2c2c2c;padding:3px 4px;border-radius:4px;font-size:11px;width:100%;outline:none;}
+    input[type="range"]{flex:1;height:4px;appearance:none;background:#c8c8c8;border-radius:2px;outline:none;}
+    input[type="range"]::-webkit-slider-thumb{appearance:none;width:13px;height:13px;border-radius:50%;background:#4a7090;cursor:pointer;border:2px solid #f5f5f5;}
+    .pct{font-size:11px;color:#606060;width:28px;text-align:right;flex-shrink:0;}
+    .act-btn{width:100%;padding:4px;background:#e8e8e8;border:1px solid #c8c8c8;color:#606060;border-radius:4px;cursor:pointer;font-size:11px;margin-bottom:4px;transition:all .15s;}
     .act-btn:hover{background:#d9d9d9;color:#2c2c2c;}
 
     /* Layout tab */
@@ -241,7 +248,11 @@
     </div>
 
     <div id="layers-hdr">
-      <span>Layers</span><span id="layer-count">0</span>
+      <span>Layers</span>
+      <div style="display:flex;align-items:center;gap:5px;">
+        <button id="btn-collapse-all">Collapse All</button>
+        <span id="layer-count">0</span>
+      </div>
     </div>
     <div id="layer-list">
       <div class="empty-state"><div class="es-icon">🗂</div>Drop a file to start.</div>
@@ -324,6 +335,14 @@
         <div class="ctrl-row"><span class="ctrl-lbl">Unit</span>
           <select id="lt-scale-unit"><option value="km">km</option><option value="mi">mi</option><option value="m">m</option></select>
         </div>
+        <div class="ctrl-row"><span class="ctrl-lbl">Distance</span>
+          <select id="lt-scale-dist">
+            <option value="1" selected>Auto</option>
+            <option value="0.5">½ Auto</option>
+            <option value="0.25">¼ Auto</option>
+            <option value="2">2× Auto</option>
+          </select>
+        </div>
         <div class="ctrl-row"><span class="ctrl-lbl">Segments</span>
           <select id="lt-scale-segs"><option value="1" selected>1 segment</option><option value="2">2 segments</option><option value="4">4 segments</option></select>
         </div>
@@ -399,9 +418,6 @@
         <button class="act-btn" id="lt-add-txt">+ Add Text Box</button>
       </div>
     </div>
-
-
-
   </div><!-- /layout tab -->
 </div><!-- /sidebar -->
 
@@ -494,12 +510,12 @@ const CMAPS={
 // ── Map ────────────────────────────────────────────────────────
 const map=L.map('map',{center:[20,100],zoom:4});
 const BASEMAPS={
-  satellite:L.tileLayer('https://server.arcgisonline.com/ArcGIS/rest/services/World_Imagery/MapServer/tile/{z}/{y}/{x}',{attribution:'© Esri',maxZoom:19}),
+  satellite:L.tileLayer('https://server.arcgisonline.com/ArcGIS/rest/services/World_Imagery/MapServer/tile/{z}/{y}/{x}',{attribution:'© Esri',maxZoom:19,crossOrigin:'anonymous'}),
   hybrid:L.layerGroup([
-    L.tileLayer('https://server.arcgisonline.com/ArcGIS/rest/services/World_Imagery/MapServer/tile/{z}/{y}/{x}',{maxZoom:19}),
-    L.tileLayer('https://server.arcgisonline.com/ArcGIS/rest/services/Reference/World_Boundaries_and_Places/MapServer/tile/{z}/{y}/{x}',{maxZoom:19,opacity:.7}),
+    L.tileLayer('https://server.arcgisonline.com/ArcGIS/rest/services/World_Imagery/MapServer/tile/{z}/{y}/{x}',{maxZoom:19,crossOrigin:'anonymous'}),
+    L.tileLayer('https://server.arcgisonline.com/ArcGIS/rest/services/Reference/World_Boundaries_and_Places/MapServer/tile/{z}/{y}/{x}',{maxZoom:19,opacity:.7,crossOrigin:'anonymous'}),
   ]),
-  osm:L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png',{attribution:'© OpenStreetMap',maxZoom:19}),
+  osm:L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png',{attribution:'© OpenStreetMap',maxZoom:19,crossOrigin:'anonymous'}),
   none:L.layerGroup(),
 };
 BASEMAPS.satellite.addTo(map);
@@ -629,10 +645,10 @@ function buildPixelFn(lo){
   const range=(stretchMax-stretchMin)||1,cm=CMAPS[colormap]||CMAPS.viridis;
   if(nBands>=3&&band==='rgb'){
     const mn=stretchMin,rng=range;
-    return vs=>{const[r,g,b]=vs;if(r==null||g==null||b==null)return null;if(nodata!==null&&r===nodata&&g===nodata&&b===nodata)return null;return `rgb(${Math.max(0,Math.min(255,Math.round((r-mn)/rng*255)))},${Math.max(0,Math.min(255,Math.round((g-mn)/rng*255)))},${Math.max(0,Math.min(255,Math.round((b-mn)/rng*255)))})`;}
+    return vs=>{const[r,g,b]=vs;if(r==null||g==null||b==null)return null;if(nodata!==null&&r===nodata&&g===nodata&&b===nodata)return null;if((r<stretchMin&&g<stretchMin&&b<stretchMin)||(r>stretchMax&&g>stretchMax&&b>stretchMax))return null;return `rgb(${Math.max(0,Math.min(255,Math.round((r-mn)/rng*255)))},${Math.max(0,Math.min(255,Math.round((g-mn)/rng*255)))},${Math.max(0,Math.min(255,Math.round((b-mn)/rng*255)))})`;}
   }
   const bi=band==='rgb'?0:(parseInt(band)||0);
-  return vs=>{const v=vs[bi];if(v==null||isNaN(v))return null;if(nodata!==null&&Math.abs(v-nodata)<1e-6)return null;return cm(Math.max(0,Math.min(1,(v-stretchMin)/range)));};
+  return vs=>{const v=vs[bi];if(v==null||isNaN(v))return null;if(nodata!==null&&Math.abs(v-nodata)<1e-6)return null;if(v<stretchMin||v>stretchMax)return null;return cm(Math.max(0,Math.min(1,(v-stretchMin)/range)));};
 }
 
 function collectUniqueValues(georaster,bandIndex,limit=80){
@@ -683,6 +699,7 @@ function renderRasterCard(lo){
   const card=document.createElement('div');card.className='layer-item';card.id=`ly-${lo.id}`;
   card.innerHTML=`
     <div class="layer-hdr">
+      <button class="layer-toggle" title="Collapse/expand">▾</button>
       <div class="layer-swatch" style="background:${SWATCHES[lo.id%SWATCHES.length]}"></div>
       <div class="layer-name" title="${lo.name}">${lo.name}</div>${lb}<span class="badge b-bands">${nb}B</span>
       <div class="layer-acts"><button class="lb up-btn" title="Move above">↑</button><button class="lb down-btn" title="Move below">↓</button><button class="lb vis-btn">${lo.visible?'👁':'🙈'}</button><button class="lb zoom-btn">⌖</button><button class="lb danger rem-btn">✕</button></div>
@@ -706,6 +723,7 @@ function renderRasterCard(lo){
     </div>`;
   const q=s=>card.querySelector(s);
   const zfn=()=>{try{map.fitBounds(lo.leafletLayer.getBounds());}catch(e){}};
+  q('.layer-toggle').addEventListener('click',()=>{const b=q('.layer-body');const t=q('.layer-toggle');const c=b.classList.toggle('collapsed');t.classList.toggle('collapsed',c);});
   q('.up-btn').addEventListener('click',()=>moveLayer(lo.id,1));
   q('.down-btn').addEventListener('click',()=>moveLayer(lo.id,-1));
   q('.vis-btn').addEventListener('click',function(){lo.visible=!lo.visible;this.textContent=lo.visible?'👁':'🙈';lo.visible?lo.leafletLayer.addTo(map):map.removeLayer(lo.leafletLayer);refreshLegend();});
@@ -713,8 +731,10 @@ function renderRasterCard(lo){
   q('.rem-btn').addEventListener('click',()=>{if(map.hasLayer(lo.leafletLayer))map.removeLayer(lo.leafletLayer);layers=layers.filter(l=>l.id!==lo.id);card.remove();updateStatus();refreshLegend();if(!layers.length)showEmpty();});
   q('.op-sl').addEventListener('input',e=>{lo.opacity=parseFloat(e.target.value);q('.op-pct').textContent=Math.round(lo.opacity*100)+'%';lo.leafletLayer?.setOpacity(lo.opacity);});
   q('.rst-btn')?.addEventListener('click',()=>{lo.stretchMin=lo.dataMin;lo.stretchMax=lo.dataMax;q('.smin').value=fmtNum(lo.stretchMin);q('.smax').value=fmtNum(lo.stretchMax);applyRender(lo);});
-  q('.smin')?.addEventListener('change',e=>{const v=parseFloat(e.target.value);if(!isNaN(v)){lo.stretchMin=v;applyRender(lo);refreshLegend();}});
-  q('.smax')?.addEventListener('change',e=>{const v=parseFloat(e.target.value);if(!isNaN(v)){lo.stretchMax=v;applyRender(lo);refreshLegend();}});
+  const updateMin=e=>{const v=parseFloat(e.target.value);if(!isNaN(v)){lo.stretchMin=v;applyRender(lo);refreshLegend();}};
+  const updateMax=e=>{const v=parseFloat(e.target.value);if(!isNaN(v)){lo.stretchMax=v;applyRender(lo);refreshLegend();}};
+  q('.smin')?.addEventListener('input',updateMin);q('.smin')?.addEventListener('change',updateMin);
+  q('.smax')?.addEventListener('input',updateMax);q('.smax')?.addEventListener('change',updateMax);
   q('.cmap-sel')?.addEventListener('change',e=>{lo.colormap=e.target.value;q('.cbar-el').style.background=cbGrad(lo.colormap);applyRender(lo);refreshLegend();});
   q('.mode-sel').addEventListener('change',e=>{lo.renderMode=e.target.value;if(lo.renderMode==='unique'&&lo.band==='rgb')lo.band='0';if(lo.renderMode==='unique')ensureUniqueValues(lo);renderRasterCard(lo);applyRender(lo);refreshLegend();});
   card.querySelectorAll('.uvc').forEach(inp=>inp.addEventListener('input',e=>{lo.uniqueColors[String(e.target.dataset.v)]=colorControlValue(e.target);applyRender(lo);refreshLegend();}));
@@ -741,7 +761,7 @@ async function processRaster(georaster,name,opts={}){
     band:nb>=3?'rgb':'0',colormap:'viridis',dataMin,dataMax,
     stretchMin:mins[0]??dataMin,stretchMax:maxs[0]??dataMax,
     renderMode:'continuous',uniqueValues:[],uniqueColors:null,opacity:.85,visible:true,leafletLayer:null,
-    isUrl:opts.isUrl||false,isCOG:opts.isCOG||false,fileSize:opts.fileSize||null,sourceUrl:opts.url||null};
+    isUrl:opts.isUrl||false,isCOG:opts.isCOG||false,fileSize:opts.fileSize||null,sourceUrl:opts.url||null,sourceData:opts.fileData||null};
   const gl=new GeoRasterLayer({georaster,opacity:lo.opacity,pixelValuesToColorFn:buildPixelFn(lo),resolution:256,debugLevel:0});
   lo.leafletLayer=gl;gl.addTo(map);layers.push(lo);
   if(layers.length===1)try{map.fitBounds(gl.getBounds());}catch(e){}
@@ -754,6 +774,7 @@ function renderVectorCard(lo){
   const card=document.createElement('div');card.className='layer-item';card.id=`ly-${lo.id}`;
   card.innerHTML=`
     <div class="layer-hdr">
+      <button class="layer-toggle" title="Collapse/expand">▾</button>
       <div class="layer-swatch" style="background:${lo.strokeColor}"></div>
       <div class="layer-name" title="${lo.name}">${lo.name}</div><span class="badge b-shp">SHP</span>
       <div class="layer-acts"><button class="lb up-btn" title="Move above">↑</button><button class="lb down-btn" title="Move below">↓</button><button class="lb vis-btn">${lo.visible?'👁':'🙈'}</button><button class="lb zoom-btn">⌖</button><button class="lb danger rem-btn">✕</button></div>
@@ -773,6 +794,7 @@ function renderVectorCard(lo){
   const q=s=>card.querySelector(s);
   const applyS=()=>{const s={color:lo.strokeColor,fillColor:lo.fillColor,fillOpacity:lo.fillOpacity,weight:lo.strokeWidth,opacity:lo.opacity};lo.leafletLayer.setStyle(s);lo.leafletLayer.eachLayer(l=>{if(l.setStyle)l.setStyle(s);if(l.setRadius)l.setRadius(lo.pointRadius);});refreshLegend();};
   const zfn=()=>{try{map.fitBounds(lo.leafletLayer.getBounds());}catch(e){}};
+  q('.layer-toggle').addEventListener('click',()=>{const b=q('.layer-body');const t=q('.layer-toggle');const c=b.classList.toggle('collapsed');t.classList.toggle('collapsed',c);});
   q('.up-btn').addEventListener('click',()=>moveLayer(lo.id,1));
   q('.down-btn').addEventListener('click',()=>moveLayer(lo.id,-1));
   q('.vis-btn').addEventListener('click',function(){lo.visible=!lo.visible;this.textContent=lo.visible?'👁':'🙈';lo.visible?lo.leafletLayer.addTo(map):map.removeLayer(lo.leafletLayer);refreshLegend();});
@@ -807,10 +829,24 @@ async function processVector(geojson,name,fileSize){
 
 // ── File loading ───────────────────────────────────────────────
 function setLoading(show,msg='Loading…'){document.getElementById('map-loading').classList.toggle('show',show);document.getElementById('loading-msg').textContent=msg;}
+function arrayBufferToBase64(buffer){
+  const bytes=new Uint8Array(buffer),chunk=0x8000,parts=[];
+  for(let i=0;i<bytes.length;i+=chunk)parts.push(String.fromCharCode(...bytes.subarray(i,i+chunk)));
+  return btoa(parts.join(''));
+}
+function base64ToArrayBuffer(base64){
+  const bin=atob(base64),bytes=new Uint8Array(bin.length);
+  for(let i=0;i<bin.length;i++)bytes[i]=bin.charCodeAt(i);
+  return bytes.buffer;
+}
 
 async function loadRasterFile(file){
   setLoading(true,`Loading ${file.name}…`);
-  try{const gr=await parseGeoraster(await file.arrayBuffer());await processRaster(gr,file.name,{isUrl:false,fileSize:file.size});}
+  try{
+    const buffer=await file.arrayBuffer();
+    const gr=await parseGeoraster(buffer.slice(0));
+    await processRaster(gr,file.name,{isUrl:false,fileSize:file.size,fileData:arrayBufferToBase64(buffer)});
+  }
   catch(e){console.error(e);alert(`Failed: ${file.name}\n${e.message}`);}
   finally{setLoading(false);}
 }
@@ -1202,20 +1238,21 @@ renderNorthArrow();
 northEl.style.display='block';
 
 // ── Custom Scale Bar ───────────────────────────────────────────
-let scaleVisible=true,scaleUnit='km',scaleSegs=1,scaleBarH=14,scaleColor='#ffffff',scaleBorderColor='#000000',scaleFontColor='#000000',scaleFontSz=14,scaleBgColor='#ffffff',scaleBgOp=1;
+let scaleVisible=true,scaleUnit='km',scaleDistMult=1,scaleSegs=1,scaleBarH=14,scaleColor='#ffffff',scaleBorderColor='#000000',scaleFontColor='#000000',scaleFontSz=14,scaleBgColor='#ffffff',scaleBgOp=1;
 
 function metersPerPx(){
   const lat=map.getCenter().lat*Math.PI/180;
   return Math.cos(lat)*2*Math.PI*6378137/(256*Math.pow(2,map.getZoom()));
 }
-function niceScaleDist(meters,unit){
+function niceScaleDist(meters,unit,mult=1){
   const factor=unit==='km'?1000:unit==='mi'?1609.34:1;
   const val=meters/factor;
   if(val<=0)return{px:80,label:'—'};
   const exp=Math.pow(10,Math.floor(Math.log10(val)));
   const nice=[1,2,5,10].reduce((p,f)=>{const c=f*exp;return(c<=val&&c>p)?c:p;},0)||exp;
-  const px=Math.round(nice*factor/metersPerPx());
-  const label=unit==='m'?(nice>=1000?(nice/1000)+' km':nice+' m'):(nice<1?(nice*1000)+' m':nice+' '+unit);
+  const dist=nice*mult;
+  const px=Math.round(dist*factor/metersPerPx());
+  const label=unit==='m'?(dist>=1000?(dist/1000)+' km':dist+' m'):(dist<1?(dist*1000)+' m':dist+' '+unit);
   return{px,label};
 }
 function updateScaleBar(){
@@ -1224,7 +1261,7 @@ function updateScaleBar(){
   el.style.display='block';
   el.style.background=colorToRgba(scaleBgColor,scaleBgOp);
   el.style.border=`1px solid ${scaleBorderColor}`;
-  const{px,label}=niceScaleDist(320*metersPerPx(),scaleUnit);
+  const{px,label}=niceScaleDist(320*metersPerPx(),scaleUnit,scaleDistMult);
   const segW=Math.max(4,Math.floor(px/scaleSegs));
   let segs='';
   for(let i=0;i<scaleSegs;i++){
@@ -1238,6 +1275,7 @@ function updateScaleBar(){
 updateScaleBar();
 document.getElementById('lt-scale-on').addEventListener('change',e=>{scaleVisible=e.target.checked;updateScaleBar();});
 document.getElementById('lt-scale-unit').addEventListener('change',e=>{scaleUnit=e.target.value;updateScaleBar();});
+document.getElementById('lt-scale-dist').addEventListener('change',e=>{scaleDistMult=parseFloat(e.target.value);updateScaleBar();});
 document.getElementById('lt-scale-segs').addEventListener('change',e=>{scaleSegs=parseInt(e.target.value);updateScaleBar();});
 document.getElementById('lt-scale-h').addEventListener('input',e=>{scaleBarH=parseInt(e.target.value);document.getElementById('lt-scale-h-v').textContent=e.target.value+'px';updateScaleBar();});
 document.getElementById('lt-scale-color').addEventListener('input',e=>{scaleColor=colorControlValue(e.target);updateScaleBar();});
@@ -1390,18 +1428,18 @@ function getLayoutState(){
     frame:{visible:g('lt-frame-on').checked,interval:parseFloat(g('lt-ref-int').value),color:colorControlValue(g('lt-frame-color')),lngRotation:parseFloat(g('lt-lng-rot').value),latRotation:parseFloat(g('lt-lat-rot').value)},
     grid:{visible:g('lt-grid-on').checked,interval:parseFloat(g('lt-ref-int').value),style:g('lt-grid-style').value,color:colorControlValue(g('lt-grid-color')),opacity:parseFloat(g('lt-grid-op').value)},
     northArrow:{visible:g('lt-north-on').checked,style:g('lt-north-style').value,size:parseInt(g('lt-north-size').value),fill:colorControlValue(g('lt-north-fill')),label:colorControlValue(g('lt-north-label'))},
-    scaleBar:{visible:g('lt-scale-on').checked,unit:g('lt-scale-unit').value,segments:parseInt(g('lt-scale-segs').value),height:parseInt(g('lt-scale-h').value),color:colorControlValue(g('lt-scale-color')),borderColor:colorControlValue(g('lt-scale-border-color')),fontSize:parseInt(g('lt-scale-font').value),fontColor:colorControlValue(g('lt-scale-font-color')),bgColor:colorControlValue(g('lt-scale-bg-color')),bgOpacity:parseFloat(g('lt-scale-bg-op').value)},
+    scaleBar:{visible:g('lt-scale-on').checked,unit:g('lt-scale-unit').value,distMult:scaleDistMult,segments:parseInt(g('lt-scale-segs').value),height:parseInt(g('lt-scale-h').value),color:colorControlValue(g('lt-scale-color')),borderColor:colorControlValue(g('lt-scale-border-color')),fontSize:parseInt(g('lt-scale-font').value),fontColor:colorControlValue(g('lt-scale-font-color')),bgColor:colorControlValue(g('lt-scale-bg-color')),bgOpacity:parseFloat(g('lt-scale-bg-op').value)},
     legend:{visible:g('lt-legend-on').checked,bgColor:colorControlValue(g('lt-legend-bg-color')),bgOpacity:parseFloat(g('lt-legend-bg-op').value),borderColor:colorControlValue(g('lt-legend-border-color')),fontSize:parseInt(g('lt-legend-font').value),bold:g('lt-legend-bold').checked,italic:g('lt-legend-italic').checked,barHeight:parseInt(g('lt-legend-bar-h').value),orientation:g('lt-legend-orient').value},
   };
 }
 
-function saveProject(){
+async function saveProject(){
   const project={
     version:2,basemap:currentBm,
     view:{lat:map.getCenter().lat,lng:map.getCenter().lng,zoom:map.getZoom()},
     layout:getLayoutState(),
     layers:layers.map(lo=>{
-      if(lo.type==='raster')return{type:'raster',name:lo.name,legendName:lo.legendName,source:lo.isUrl?'url':'file',url:lo.sourceUrl,colormap:lo.colormap,band:lo.band,renderMode:lo.renderMode,uniqueColors:lo.uniqueColors,stretchMin:lo.stretchMin,stretchMax:lo.stretchMax,opacity:lo.opacity,visible:lo.visible};
+      if(lo.type==='raster')return{type:'raster',name:lo.name,legendName:lo.legendName,source:lo.isUrl?'url':'embedded',url:lo.sourceUrl,fileData:lo.sourceData,fileSize:lo.fileSize,colormap:lo.colormap,band:lo.band,renderMode:lo.renderMode,uniqueColors:lo.uniqueColors,stretchMin:lo.stretchMin,stretchMax:lo.stretchMax,opacity:lo.opacity,visible:lo.visible};
       return{type:'vector',name:lo.name,legendName:lo.legendName,source:'embedded',geojson:lo.geojson,strokeColor:lo.strokeColor,fillColor:lo.fillColor,fillOpacity:lo.fillOpacity,strokeWidth:lo.strokeWidth,pointRadius:lo.pointRadius,opacity:lo.opacity,visible:lo.visible};
     }),
   };
@@ -1431,6 +1469,7 @@ async function loadProject(file){
   }
   if(l.scaleBar){
     if(l.scaleBar.unit){g('lt-scale-unit').value=l.scaleBar.unit;scaleUnit=l.scaleBar.unit;}
+    if(l.scaleBar.distMult){g('lt-scale-dist').value=l.scaleBar.distMult;scaleDistMult=l.scaleBar.distMult;}
     if(l.scaleBar.segments){g('lt-scale-segs').value=l.scaleBar.segments;scaleSegs=l.scaleBar.segments;}
     if(l.scaleBar.height){g('lt-scale-h').value=l.scaleBar.height;scaleBarH=l.scaleBar.height;g('lt-scale-h-v').textContent=scaleBarH+'px';}
     if(l.scaleBar.color){setColorControlValue(g('lt-scale-color'),l.scaleBar.color);scaleColor=l.scaleBar.color;}
@@ -1453,20 +1492,37 @@ async function loadProject(file){
     restoreCheck('lt-legend-on',l.legend.visible);applyLegendStyle();refreshLegend();
   }
   // Layers
+  function restoreRasterSettings(lo,ld){
+    Object.assign(lo,{legendName:ld.legendName,colormap:ld.colormap,band:ld.band,renderMode:ld.renderMode||'continuous',uniqueColors:ld.uniqueColors||null,stretchMin:ld.stretchMin,stretchMax:ld.stretchMax,opacity:ld.opacity,visible:ld.visible});
+    if(lo.renderMode==='unique')ensureUniqueValues(lo);
+    lo.leafletLayer.setOpacity(lo.opacity);
+    if(lo.visible===false&&map.hasLayer(lo.leafletLayer))map.removeLayer(lo.leafletLayer);
+    if(lo.visible!==false&&!map.hasLayer(lo.leafletLayer))lo.leafletLayer.addTo(map);
+    applyRender(lo);renderRasterCard(lo);
+  }
   for(const ld of (proj.layers||[])){
     if(ld.type==='raster'&&ld.source==='url'&&ld.url){
       await loadFromUrl(ld.url,ld.name);
       const lo=layers[layers.length-1];
-      if(lo){Object.assign(lo,{legendName:ld.legendName,colormap:ld.colormap,band:ld.band,renderMode:ld.renderMode||'continuous',uniqueColors:ld.uniqueColors||null,stretchMin:ld.stretchMin,stretchMax:ld.stretchMax,opacity:ld.opacity,visible:ld.visible});if(lo.renderMode==='unique')ensureUniqueValues(lo);applyRender(lo);renderRasterCard(lo);}
-    }else if(ld.type==='raster'&&ld.source==='file'){
-      // Placeholder for file-based rasters
+      if(lo)restoreRasterSettings(lo,ld);
+    }else if(ld.type==='raster'&&ld.source==='embedded'&&ld.fileData){
+      setLoading(true,`Restoring ${ld.name}…`);
+      try{
+        const gr=await parseGeoraster(base64ToArrayBuffer(ld.fileData));
+        await processRaster(gr,ld.name,{isUrl:false,fileSize:ld.fileSize||null,fileData:ld.fileData});
+        const lo=layers[layers.length-1];
+        if(lo)restoreRasterSettings(lo,ld);
+      }catch(e){console.error(e);alert(`Could not restore raster layer: ${ld.name}\n${e.message}`);}
+      finally{setLoading(false);}
+    }else if(ld.type==='raster'&&(ld.source==='file'||ld.source==='embedded')){
+      // Placeholder for old project files saved before raster embedding.
       const div=document.createElement('div');div.style.cssText='background:#21262d;border:1px solid #da3633;border-radius:6px;padding:8px;margin-bottom:4px;font-size:10px;color:#8b949e;';
-      div.innerHTML=`⚠ <strong>${ld.name}</strong><br>File not saved in project. Drag & drop the file to reload.`;
+      div.innerHTML=`⚠ <strong>${ld.name}</strong><br>Layer file was not embedded in this project. Drag & drop the file to reload.`;
       const list=document.getElementById('layer-list');list.querySelector('.empty-state')?.remove();list.insertBefore(div,list.firstChild);
     }else if(ld.type==='vector'&&ld.geojson){
       await processVector(ld.geojson,ld.name+'.shp',null);
       const lo=layers[layers.length-1];
-      if(lo){Object.assign(lo,{legendName:ld.legendName,strokeColor:ld.strokeColor,fillColor:ld.fillColor,fillOpacity:ld.fillOpacity,strokeWidth:ld.strokeWidth,pointRadius:ld.pointRadius||5,opacity:ld.opacity,visible:ld.visible});renderVectorCard(lo);}
+      if(lo){Object.assign(lo,{legendName:ld.legendName,strokeColor:ld.strokeColor,fillColor:ld.fillColor,fillOpacity:ld.fillOpacity,strokeWidth:ld.strokeWidth,pointRadius:ld.pointRadius||5,opacity:ld.opacity,visible:ld.visible});if(lo.visible===false&&map.hasLayer(lo.leafletLayer))map.removeLayer(lo.leafletLayer);renderVectorCard(lo);}
     }
   }
   refreshLegend();
@@ -1479,7 +1535,7 @@ function fitAndSyncLayer(andLock){
   try{
     const b=frameLatLng?L.latLngBounds([[frameLatLng.s,frameLatLng.w],[frameLatLng.n,frameLatLng.e]]):map.getBounds();
     frameLatLng={n:b.getNorth(),s:b.getSouth(),e:b.getEast(),w:b.getWest()};
-    map.fitBounds(b,{padding:[0,0]});
+    map.fitBounds(b,{padding:[0,0],animate:false});
     if(andLock){extentLocked=true;map.setMaxBounds(b.pad(0.02));}
     if(frameEnabled)drawFrameScope();
     if(gratEnabled)buildGrat();
@@ -1507,10 +1563,21 @@ document.getElementById('ref-fit-btn').addEventListener('click',()=>{
     }
     fitAndSyncLayer(true);
     updateLockBtn();
-    if(frameEnabled)setTimeout(drawFrameScope,250);
   }
 });
 
+
+
+document.getElementById('btn-collapse-all').addEventListener('click',function(){
+  const bodies=document.querySelectorAll('#layer-list .layer-body');
+  const anyExpanded=[...bodies].some(b=>!b.classList.contains('collapsed'));
+  bodies.forEach(b=>{
+    const t=b.closest('.layer-item').querySelector('.layer-toggle');
+    b.classList.toggle('collapsed',anyExpanded);
+    t.classList.toggle('collapsed',anyExpanded);
+  });
+  this.textContent=anyExpanded?'Expand All':'Collapse All';
+});
 
 document.getElementById('btn-save-proj').addEventListener('click',saveProject);
 document.getElementById('btn-load-proj').addEventListener('click',()=>document.getElementById('proj-file-input').click());
