@@ -1,0 +1,11 @@
+{
+  "version": "0.0.1",
+  "configurations": [
+    {
+      "name": "geoimage-mockup",
+      "runtimeExecutable": "python3",
+      "runtimeArgs": ["-m", "http.server", "7321", "--directory", "/tmp/geoimage-viewer-mockup"],
+      "port": 7321
+    }
+  ]
+}
